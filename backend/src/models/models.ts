@@ -30,8 +30,7 @@ const requestSchema = new mongoose.Schema({
 });
 
 // Create models
-const User = mongoose.model('User', userSchema);
-const Donation = mongoose.model('Donation', donationSchema);
-const Request = mongoose.model('Request', requestSchema);
+export const User = mongoose.model('User', userSchema);
+export const Donation = mongoose.model('Donation', donationSchema);
+export const Request = mongoose.model('Request', requestSchema);
 
-export default { User, Donation, Request };
