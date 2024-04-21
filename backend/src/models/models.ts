@@ -1,17 +1,24 @@
-import mongoose from "mongoose";
 
+import mongoose, { Document, Schema } from 'mongoose';
 
+export interface IDonation extends Document {
+  donorId: Schema.Types.ObjectId;
+  foodName: string;
+  description: string;
+  quantity: number;
+  location: string;
+  donationDate: Date;
+}
 
-// Define user schema
 const userSchema = new mongoose.Schema({
   username: { type: String, required: true },
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
 });
 
-// Define food donation schema
-const donationSchema = new mongoose.Schema({
-  donorId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+
+const donationSchema = new Schema<IDonation>({
+  donorId: { type: Schema.Types.ObjectId, ref: 'User', required: true },
   foodName: { type: String, required: true },
   description: { type: String },
   quantity: { type: Number, required: true },
@@ -19,7 +26,7 @@ const donationSchema = new mongoose.Schema({
   donationDate: { type: Date, default: Date.now },
 });
 
-// Define food request schema
+
 const requestSchema = new mongoose.Schema({
   requesterId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
   foodName: { type: String, required: true },
@@ -29,7 +36,7 @@ const requestSchema = new mongoose.Schema({
   requestDate: { type: Date, default: Date.now },
 });
 
-// Create models
+
 export const User = mongoose.model('User', userSchema);
 export const Donation = mongoose.model('Donation', donationSchema);
 export const Request = mongoose.model('Request', requestSchema);

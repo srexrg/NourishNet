@@ -1,9 +1,14 @@
-import express from "express";
-// import { login, logout } from "../controllers/auth.controllers.js";
+import express, { NextFunction, Request, Response } from "express";
+import protectedRoute from "../middleware/protectedRoute";
+import { addFood,deleteFood,getAllFood, getFoodById, updateFood } from "../controllers/donation.controller";
 
 const router = express.Router();
 
-router.post("/add-food", add);
-router.post("/request-food", request);
+
+router.post("/donate-food", protectedRoute, addFood as any);
+router.get("/", protectedRoute, getAllFood as any);
+router.get("/:id", protectedRoute, getFoodById as any);
+router.patch("/update/:id", protectedRoute, updateFood as any);
+router.delete("/delete/:id", protectedRoute, deleteFood as any);
 
 export default router;

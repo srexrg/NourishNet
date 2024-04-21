@@ -35,6 +35,7 @@ export const register = async (req: Request, res: Response) => {
     return res.status(201).json({
       _id: newUser._id,
       username: newUser.username,
+      token: req.cookies.jwt
     });
   } catch (error) {
     console.log(error);
@@ -44,15 +45,15 @@ export const register = async (req: Request, res: Response) => {
 
 export const login = async (req: Request, res: Response) => {
   try {
-    const { email, password } = req.body;
+    const { username, password } = req.body;
 
-    if (!email || !password) {
+    if (!username || !password) {
       return res
         .status(400)
         .json({ error: "Both username and password are required" });
     }
 
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ username });
 
     if (!user || !(await bcrypt.compare(password, user.password))) {
       return res.status(400).json({ error: "Invalid credentials" });
@@ -62,6 +63,7 @@ export const login = async (req: Request, res: Response) => {
     res.status(200).json({
       _id: user._id,
       username: user.username,
+      token: req.cookies.jwt
     });
   } catch (error) {
     console.error("Login error:", error);
@@ -71,7 +73,6 @@ export const login = async (req: Request, res: Response) => {
 
 export const logout = (req: Request, res: Response) => {
   try {
-    // Clear JWT cookie
     res
       .clearCookie("jwt")
       .status(200)
