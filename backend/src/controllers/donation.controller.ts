@@ -1,11 +1,11 @@
-import { Donation, IDonation } from "../models/models";
+import { Donation } from "../models/models";
 import { Request, Response } from "express";
 import { FoodRequest, UserAuthInfoRequest } from "../types/types";
 
 export const addFood = async (req: UserAuthInfoRequest, res: Response) => {
   try {
     const { foodName, description, quantity, location, donationDate } =
-      req.body as unknown as FoodRequest;
+      req.body;
 
     const donorId = req.user._id;
 
@@ -78,8 +78,8 @@ export const updateFood = async (req: UserAuthInfoRequest, res: Response) => {
     }
     res.status(200).json(donation);
   } catch (error) {
-    return res.status(500).json({ error: "Failed to create donation" });
     console.log(error);
+    return res.status(500).json({ error: "Failed to create donation" });
   }
 };
 
@@ -91,6 +91,7 @@ export const deleteFood = async (req: Request, res: Response) => {
     }
     res.status(200).json({ message: "Donation deleted successfully" });
   } catch (error) {
+    console.log(error);
     res
       .status(500)
       .json({ error: "Failed to delete donation", message: error });

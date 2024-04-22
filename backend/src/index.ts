@@ -5,7 +5,6 @@ import authRoutes from "./routes/auth.routes";
 import foodRoutes from "./routes/food.routes";
 import connectDB from "./db/db";
 import cookieParser from 'cookie-parser';
-import protectedRoute from "./middleware/protectedRoute";
 
 
 dotenv.config();
