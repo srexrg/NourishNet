@@ -39,6 +39,11 @@ const requestSchema = new mongoose.Schema({
   location: { type: String, required: true },
   donorId: { type: Schema.Types.ObjectId, ref: "User", required: true },
   requestDate: { type: Date, default: Date.now },
+  status: {
+    type: String,
+    enum: ["pending", "approved", "declined", "cancelled"],
+    default: "pending",
+  },
 });
 
 

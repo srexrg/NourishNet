@@ -38,12 +38,10 @@ export const requestFood = async (req: UserAuthInfoRequest, res: Response) => {
     });
 
     if (!updateResult) {
-      return res
-        .status(500)
-        .json({
-          success: false,
-          message: "Failed to update donation with request",
-        });
+      return res.status(500).json({
+        success: false,
+        message: "Failed to update donation with request",
+      });
     }
 
     res.status(201).json({
@@ -55,6 +53,105 @@ export const requestFood = async (req: UserAuthInfoRequest, res: Response) => {
     res
       .status(500)
       .json({ success: false, message: "Internal server error", error: error });
+  }
+};
+
+export const acceptRequest = async (
+  req: UserAuthInfoRequest,
+  res: Response
+) => {
+  try {
+    const requestId = req.params.id;
+
+    if (!requestId) {
+      return res.status(404).json({
+        success: false,
+        message: "Request Not found",
+      });
+    }
+
+    const acceptRequest = await RequestModel.findByIdAndUpdate(
+      requestId,
+      { status: "approved" },
+      { new: true }
+    );
+
+    res.status(200).json({
+      success: true,
+      message: "Request approved",
+      request: acceptRequest,
+    });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ success: false, message: "Internal server error", error });
+  }
+};
+
+export const declineRequest = async (
+  req: UserAuthInfoRequest,
+  res: Response
+) => {
+  try {
+    const requestId = req.params.id;
+
+    if (!requestId) {
+      return res.status(404).json({
+        success: false,
+        message: "Request Not found",
+      });
+    }
+
+    const declineReq = await RequestModel.findByIdAndUpdate(
+      requestId,
+      { status: "declined" },
+      { new: true }
+    );
+    console.log(declineReq)
+
+    res.status(200).json({
+      success: true,
+      message: "Request Declined",
+      request: declineReq,
+    });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ success: false, message: "Internal server error", error });
+  }
+};
+
+export const deleteRequest = async (
+  req: UserAuthInfoRequest,
+  res: Response
+) => {
+  try {
+    const reqId = req.params.id;
+
+    if (!reqId) {
+      return res.status(404).json({
+        success: false,
+        msg: "No request found",
+      });
+    }
+
+    const deleteReq = await RequestModel.findByIdAndDelete(reqId);
+
+    if (!deleteReq) {
+      return res.status(400).json({
+        success: false,
+        msg: "Unable to delte request",
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "Request Deleted",
+    });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ success: false, message: "Internal server error", error });
   }
 };
 
