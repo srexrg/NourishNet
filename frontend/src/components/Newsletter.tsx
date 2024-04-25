@@ -1,10 +1,7 @@
+import { Link } from "react-router-dom";
 import { Button } from "./ui/button";
 
 export const JoinUs = () => {
-  const handleJoinUs = () => {
-    console.log("Joined!");
-    // Add your logic for what should happen when the user joins
-  };
 
   return (
     <section id="join-us">
@@ -20,8 +17,12 @@ export const JoinUs = () => {
         <p className="text-xl text-muted-foreground mt-4 mb-8">
           Be part of our community and make a difference.
         </p>
+        <Button>
+        <Link to="/signin">Join Us</Link>
 
-        <Button onClick={handleJoinUs}>Join Us</Button>
+        </Button>
+
+        
       </div>
 
       <hr className="w-11/12 mx-auto" />

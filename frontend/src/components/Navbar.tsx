@@ -12,11 +12,11 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 
-import { GitHubLogoIcon } from "@radix-ui/react-icons";
-import { buttonVariants } from "./ui/button";
+import { Button, buttonVariants } from "./ui/button";
 import { Menu } from "lucide-react";
 import { ModeToggle } from "./mode-toggle";
 import { LogoIcon } from "./Icons";
+import { Link } from "react-router-dom";
 
 interface RouteProps {
   href: string;
@@ -92,16 +92,12 @@ export const Navbar = () => {
                       {label}
                     </a>
                   ))}
-                  <a
-                    href="https://github.com/srexrg"
-                    target="_blank"
-                    className={`w-[110px] border ${buttonVariants({
-                      variant: "secondary",
-                    })}`}
+                  <Link
+                    to="/login"
                   >
-                    <GitHubLogoIcon className="mr-2 w-5 h-5" />
-                    Github
-                  </a>
+                    {/* <GitHubLogoIcon className="mr-2 w-5 h-5" /> */}
+                    Login
+                  </Link>
                 </nav>
               </SheetContent>
             </Sheet>
@@ -123,14 +119,15 @@ export const Navbar = () => {
           </nav>
 
           <div className="hidden md:flex gap-2">
-            <a
-              href="https://github.com/srexrg"
-              target="_blank"
-              className={`border ${buttonVariants({ variant: "secondary" })}`}
-            >
-              <GitHubLogoIcon className="mr-2 w-5 h-5" />
-              Github
-            </a>
+            <Button>
+            <Link
+              to="/login"
+              >
+              Login
+            </Link>
+
+            </Button>
+            
 
             <ModeToggle />
           </div>

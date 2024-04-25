@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { HeroCards } from "./HeroCards";
 import { Button } from "./ui/button";
 import { buttonVariants } from "./ui/button";
@@ -23,7 +24,12 @@ export const Hero = () => {
         </p>
 
         <div className="space-y-4 md:space-y-0 md:space-x-4">
-          <Button className="w-full md:w-1/3">Join Now</Button>
+          <Button className="w-full md:w-1/3">
+          <Link to="/signup">
+            Join Now
+          </Link>
+            </Button>
+          
 
           <a
             href="https://github.com/srexrg"

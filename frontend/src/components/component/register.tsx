@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import useSignup from "@/hooks/useSignup";
 import { Label } from "@radix-ui/react-dropdown-menu";
 import { useForm } from "react-hook-form";
-import image from "@/assets/signup.jpeg"
 
 interface FormData {
   username: string;
@@ -12,7 +11,7 @@ interface FormData {
   password: string;
 }
 
-export function SignUp() {
+export function Register() {
   const {
     register,
     handleSubmit,
@@ -108,7 +107,11 @@ export function SignUp() {
               alt="People sharing food"
               className="rounded-lg"
               height="400"
-              src={image}
+              src="../../assets/signup.jpeg"
+              style={{
+                aspectRatio: "600/400",
+                objectFit: "cover",
+              }}
               width="600"
             />
           </div>

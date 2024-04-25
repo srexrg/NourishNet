@@ -1,10 +1,17 @@
+
 import "./App.css";
-import SignUp from "./components/Signup/Signup";
+import { Login } from "./components/Login/Login";
+import {SignUp} from "./components/Signup/Signup";
+// import { Register } from "./components/Signup/Signup";
+import { useAuthContext } from "./context/AuthContext";
+import { Toaster } from "react-hot-toast";
 import LandingPage from "./pages/LandingPage";
 
-import { Route, Routes } from "react-router";
+import { Navigate, Route, Routes } from "react-router";
+import Home from "./pages/Home";
 
 function App() {
+  const { authUser } = useAuthContext() || {};
   return (
     <div>
 
@@ -15,9 +22,18 @@ function App() {
       />
       <Route
       path="/signup"
-      element={<SignUp/>}
+      element={authUser ? <Navigate to={"/home"} /> : <SignUp/>}
+      />
+      <Route
+      path="/login"
+      element={authUser ? <Navigate to={"/home"} /> : <Login/>}
+      />
+      <Route
+      path="/home"
+      element={authUser ? <Home /> : <Navigate to={"/login"} />}
       />
     </Routes>
+    <Toaster/>
       
     </div>
   );

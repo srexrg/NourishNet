@@ -1,37 +1,35 @@
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import useSignup from "@/hooks/useSignup";
+import useLogin from "@/hooks/UseLogin";
 import { Label } from "@radix-ui/react-dropdown-menu";
 import { useForm } from "react-hook-form";
-import image from "@/assets/signup.jpeg"
+import image from "@/assets/login.jpeg"
 
 interface FormData {
   username: string;
-  email: string;
   password: string;
 }
 
-export function SignUp() {
+export function Login() {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<FormData>();
-  const { loading, signup } = useSignup();
+  const { loading, login } = useLogin();
 
   const onSubmit = async (data: FormData) => {
-    await signup(data);
+    await login(data);
   };
   return (
     <section className="bg-[#111827] text-white min-h-screen flex flex-col items-center justify-center">
       <div className="max-w-4xl mx-auto p-8">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
           <div>
-            <h1 className="text-5xl font-bold mb-4">Sign Up</h1>
+            <h1 className="text-5xl font-bold mb-4">Login</h1>
             <p className="text-xl mb-8">
-              Join the FoodNet Community and start sharing your meals, recipes,
-              and joy with locals.
+              Welcome Back!
             </p>
             <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
               <div>
@@ -50,23 +48,6 @@ export function SignUp() {
                   <span className="text-red-500">
                     {errors.username.message}
                   </span>
-                )}
-              </div>
-              <div>
-                <label
-                  className="block text-sm font-medium mb-1"
-                  htmlFor="email"
-                >
-                  Email Address
-                </label>
-                <Input
-                  id="email"
-                  placeholder="john.doe@example.com"
-                  type="email"
-                  {...register("email")}
-                />
-                {errors.email && (
-                  <span className="text-red-500">{errors.email.message}</span>
                 )}
               </div>
               <div>
@@ -97,9 +78,9 @@ export function SignUp() {
               </Button>
             </form>
             <p className="text-sm text-gray-400 mt-6">
-              Already have an account?
-              <Link className="text-green-500 hover:underline" to="/login">
-                Log in
+              Don't have an account? {""}
+              <Link className="text-green-500 hover:underline" to="/signup">
+                Sign Up
               </Link>
             </p>
           </div>
@@ -109,6 +90,10 @@ export function SignUp() {
               className="rounded-lg"
               height="400"
               src={image}
+              style={{
+                // aspectRatio: "600/400",
+                objectFit: "cover",
+              }}
               width="600"
             />
           </div>
@@ -117,3 +102,4 @@ export function SignUp() {
     </section>
   );
 }
+
