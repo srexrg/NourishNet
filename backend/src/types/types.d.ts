@@ -11,7 +11,8 @@ export interface UserAuthInfoRequest extends Request {
     // Come back to this
     user?: any;
     params?:any,
-    body?:any
+    body?:any,
+    file?:any
   }
 
 export type FoodRequest= {

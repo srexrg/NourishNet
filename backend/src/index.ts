@@ -7,7 +7,9 @@ import connectDB from "./db/db";
 import cookieParser from 'cookie-parser';
 
 
-dotenv.config();
+dotenv.config({
+  path: './.env'
+});
 const app = express();
 
 app.use(cors());

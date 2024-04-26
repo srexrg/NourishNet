@@ -1,6 +1,7 @@
 import { Donation } from "../models/models";
 import { Request, Response } from "express";
 import { FoodRequest, UserAuthInfoRequest } from "../types/types";
+import { uploadOnCloudinary } from "../utils/cloudinary";
 
 export const addFood = async (req: UserAuthInfoRequest, res: Response) => {
   try {
@@ -9,9 +10,22 @@ export const addFood = async (req: UserAuthInfoRequest, res: Response) => {
 
     const donorId = req.user._id;
 
+    const imagePath = req.file?.path;
+
+    if (!imagePath) {
+      throw new Error("Image required");
+    }
+
+    const foodPic = await uploadOnCloudinary(imagePath)
+
+    if (!foodPic) {
+      throw new Error("Failed to upload image");
+    }
+
     const newDonation = new Donation({
       donorId,
       foodName,
+      foodImage:foodPic.url,
       description,
       quantity,
       location,
@@ -23,8 +37,8 @@ export const addFood = async (req: UserAuthInfoRequest, res: Response) => {
       newDonation,
     });
   } catch (error) {
-    return res.status(500).json({ error: "Failed to create donation" });
     console.log(error);
+    return res.status(500).json({ error: "Failed to create donation" });
   }
 };
 
