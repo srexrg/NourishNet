@@ -68,7 +68,7 @@ export const getFoodById = async (req: Request, res: Response) => {
     }
     res.status(200).json(donation);
   } catch (error) {
-    console.log;
+    console.log(error);
     res.status(500).json({ error: "Failed to get donation" });
   }
 };
