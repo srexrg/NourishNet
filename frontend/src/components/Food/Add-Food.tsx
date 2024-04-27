@@ -5,8 +5,11 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "../ui/textarea";
 import { useState } from "react";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router";
 
 export default function AddFood() {
+  const navigate = useNavigate()
+
   const [loading, setLoading] = useState(false);
 
   const [input, setInput] = useState({
@@ -62,6 +65,7 @@ export default function AddFood() {
         throw new Error(data.error);
       }
       toast.success("Food added successfully!");
+      navigate("/home");
     } catch (e) {
       toast.error((e as Error).message);
     } finally {

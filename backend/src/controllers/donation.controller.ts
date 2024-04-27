@@ -63,7 +63,9 @@ export const getAllFood = async (req: Request, res: Response) => {
 
 export const getFoodById = async (req: Request, res: Response) => {
   try {
-    const donation = await Donation.findById(req.params.id);
+
+    const {id} = req.params;
+    const donation = await Donation.findById(id);
     if (!donation) {
       return res.status(404).json({ error: "Donation not found" });
     }

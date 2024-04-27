@@ -2,12 +2,12 @@ import React, { useState, useEffect } from "react";
 import FoodItem from "./FoodItem";
 
 interface Food {
-  id: number;
+  _id: string;
   foodName: string;
   description: string;
-  quantity:string
+  quantity: string;
   foodImage: string;
-  sharedBy:string
+  sharedBy: string;
 }
 
 const FoodList: React.FC = () => {
@@ -25,8 +25,8 @@ const FoodList: React.FC = () => {
       <div className="container mx-auto px-4">
         <h2 className="text-2xl font-bold mb-8">Available Food</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-          {foods.map((food) => (
-            <FoodItem key={food.id} food={food} />
+          {foods.map((food, index) => (
+            <FoodItem key={`${food._id}-${index}`} food={food} />
           ))}
         </div>
       </div>
