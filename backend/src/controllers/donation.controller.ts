@@ -8,7 +8,7 @@ export const addFood = async (req: UserAuthInfoRequest, res: Response) => {
     const { foodName, description, quantity, location, donationDate } =
       req.body;
 
-    const donorId = req.user._id;
+      const { _id: donorId, username } = req.user;
 
     const imagePath = req.file?.path;
 
@@ -30,6 +30,7 @@ export const addFood = async (req: UserAuthInfoRequest, res: Response) => {
       quantity,
       location,
       donationDate,
+      sharedBy:username
     });
 
     await newDonation.save();

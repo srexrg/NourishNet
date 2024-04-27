@@ -1,8 +1,7 @@
 import express from "express";
 import protectedRoute from "../middleware/protectedRoute";
-import { addFood,deleteFood,getAllFood, getFoodById, updateFood } from "../controllers/donation.controller";
+import { deleteFood,getAllFood, getFoodById, updateFood } from "../controllers/donation.controller";
 import {requestFood,getUserRequests,acceptRequest,declineRequest,deleteRequest} from "../controllers/request.controller"
-import { upload } from "../middleware/multer";
 
 
 const router = express.Router();
