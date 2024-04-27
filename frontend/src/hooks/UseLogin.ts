@@ -33,7 +33,7 @@ const useLogin = () => {
                 throw new Error(data.error);
             }
 
-            localStorage.setItem("chat-user", JSON.stringify(data))
+            localStorage.setItem("user", JSON.stringify(data))
             if (setAuthUser) {
                 setAuthUser(data);
             }

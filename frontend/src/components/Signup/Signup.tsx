@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import useSignup from "@/hooks/useSignup";
 import { Label } from "@radix-ui/react-dropdown-menu";
 import { useForm } from "react-hook-form";
-import image from "@/assets/signup.jpeg"
+import image from "@/assets/signup.jpeg";
 
 interface FormData {
   username: string;

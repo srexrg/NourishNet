@@ -1,13 +1,12 @@
-import { Button } from '@/components/ui/button'
-import useLogout from '@/hooks/useLogout';
+import { HomeLanding } from "@/components/component/home-land"
+
+
 
 const Home = () => {
-  const {logout } = useLogout();
   return (
-    <div>
-      Hello
-      <Button onClick={logout}> Logout</Button>
-    </div>
+    <>
+      <HomeLanding/>
+    </>
   )
 }
 

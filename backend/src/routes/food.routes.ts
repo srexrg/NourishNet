@@ -8,7 +8,7 @@ import { upload } from "../middleware/multer";
 const router = express.Router();
 
 
-router.post("/donate-food", protectedRoute,upload.single("foodImage"), addFood as any);
+
 router.get("/", protectedRoute, getAllFood as any);
 router.get("/:id", protectedRoute, getFoodById as any);
 router.patch("/update/:id", protectedRoute, updateFood as any);

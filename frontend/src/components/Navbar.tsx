@@ -95,7 +95,6 @@ export const Navbar = () => {
                   <Link
                     to="/login"
                   >
-                    {/* <GitHubLogoIcon className="mr-2 w-5 h-5" /> */}
                     Login
                   </Link>
                 </nav>
@@ -119,13 +118,12 @@ export const Navbar = () => {
           </nav>
 
           <div className="hidden md:flex gap-2">
-            <Button>
+            <Button onClick={()=>console.log("Clicked")}>
             <Link
               to="/login"
               >
               Login
             </Link>
-
             </Button>
             
 
