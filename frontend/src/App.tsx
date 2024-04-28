@@ -9,6 +9,7 @@ import { Navigate, Route, Routes } from "react-router";
 import Home from "./pages/Home";
 import AddFood from "./components/Food/Add-Food";
 import RequestFood from "./components/Food/Request-Food";
+import MyFoods from "./components/Food/MyFood";
 
 function App() {
   const { authUser } = useAuthContext() || {};
@@ -35,6 +36,10 @@ function App() {
         <Route
           path="/request"
           element={authUser ? <RequestFood /> : <Navigate to={"/login"} /> }
+        />
+        <Route
+          path="/home/myfood"
+          element={authUser ? <MyFoods /> : <Navigate to={"/login"} /> }
         />
       </Routes>
       <Toaster />

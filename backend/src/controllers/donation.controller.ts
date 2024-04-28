@@ -76,6 +76,25 @@ export const getFoodById = async (req: Request, res: Response) => {
   }
 };
 
+export const getFoodByCurrentUser = async (req:UserAuthInfoRequest, res:Response) => {
+  try {
+    const currentUsername = req.user.username; // Assuming username is stored in req.user after authentication
+
+    // Query donations associated with the current user's username
+    const donations = await Donation.find({ sharedBy: currentUsername });
+
+    if (donations.length === 0) {
+      return res.status(404).json({ error: "No donations found for the current user" });
+    }
+
+    res.status(200).json(donations);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: "Failed to get donations for the current user" });
+  }
+};
+
+
 export const updateFood = async (req: UserAuthInfoRequest, res: Response) => {
   try {
     const { foodName, description, quantity, location, donationDate } =

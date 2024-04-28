@@ -24,7 +24,7 @@ export function HomeLanding() {
           <Link className="hover:underline" to="/request">
             Request Food
           </Link>
-          <Link className="hover:underline" to="/myfoods">
+          <Link className="hover:underline" to="/home/myfood">
             My Foods
           </Link>
           <Button

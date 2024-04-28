@@ -1,6 +1,6 @@
 import express from "express";
 import protectedRoute from "../middleware/protectedRoute";
-import { deleteFood, getAllFood, getFoodById, updateFood } from "../controllers/donation.controller";
+import { deleteFood,getFoodByCurrentUser,getAllFood, getFoodById, updateFood } from "../controllers/donation.controller";
 import { requestFood, getUserRequests, acceptRequest, declineRequest, deleteRequest } from "../controllers/request.controller"
 
 
@@ -9,6 +9,7 @@ const router = express.Router();
 
 
 router.get("/", protectedRoute, getAllFood as any);
+router.get("/user", protectedRoute, getFoodByCurrentUser as any);
 router.get("/:id", protectedRoute, getFoodById as any);
 router.patch("/update/:id", protectedRoute, updateFood as any);
 router.delete("/delete/:id", protectedRoute, deleteFood as any);
