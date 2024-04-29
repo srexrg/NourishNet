@@ -10,7 +10,7 @@ import Home from "./pages/Home";
 import AddFood from "./components/Food/Add-Food";
 import RequestFood from "./components/Food/Request-Food";
 import MyFoods from "./components/Food/MyFood";
-import MyRequests from "./components/Food/Request";
+import MyRequests from "./components/Food/MyRequests";
 
 function App() {
   const { authUser } = useAuthContext() || {};

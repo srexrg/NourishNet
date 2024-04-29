@@ -1,3 +1,5 @@
+// RequestCard.tsx
+
 import React, { useState } from "react";
 import { Card, CardContent } from "./ui/card";
 import { Button } from "./ui/button";
@@ -13,12 +15,11 @@ interface Request {
   status: string;
 }
 
-const RequestCard: React.FC<Props> = ({ request }: Props) => {
+const RequestCard: React.FC<Props> = ({ request, reloadRequests }: Props) => { 
   const [loading, setLoading] = useState(false);
 
   const { foodName, description, quantity, foodImage, sharedBy, status, _id } =
     request;
-  console.log(_id);
 
   const handleDeleteRequest = async () => {
     setLoading(true);
@@ -29,9 +30,11 @@ const RequestCard: React.FC<Props> = ({ request }: Props) => {
           "Content-Type": "application/json",
         },
       });
-      const data = await response.json();
-      toast.success("Food requested successfully!");
-      console.log(data);
+      if (!response.ok) {
+        throw new Error("Failed to delete request");
+      }
+      toast.success("Food Deleted successfully!");
+      reloadRequests(); 
     } catch (error) {
       console.error("Error Deleting food request:", error);
       toast.error("Error deleting food");
@@ -65,7 +68,7 @@ const RequestCard: React.FC<Props> = ({ request }: Props) => {
             <p className="text-gray-600 dark:text-gray-400 mb-2">
               Status: <span className="font-bold">{status}</span>
             </p>
-            <Button onClick={handleDeleteRequest}>
+            <Button onClick={handleDeleteRequest} disabled={loading}> 
               {loading ? "Deleting" : "Delete Request"}
             </Button>
           </div>
@@ -77,6 +80,7 @@ const RequestCard: React.FC<Props> = ({ request }: Props) => {
 
 export interface Props {
   request: Request;
+  reloadRequests: () => void; 
 }
 
 export default RequestCard;

@@ -10,7 +10,7 @@ interface Request {
   quantity: string;
   foodImage: string;
   sharedBy: string;
-  status:string;
+  status: string;
 }
 
 const useGetRequests = () => {
@@ -20,34 +20,38 @@ const useGetRequests = () => {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const fetchFood = async () => {
-      setLoading(true);
-      try {
-        if (!authUser) {
-          return;
-        }
-
-        const response = await fetch(`/api/food/getRequest/${authUser._id}`);
-
-        if (!response.ok) {
-          throw new Error(`Failed to retrieve food items: ${response.statusText}`);
-        }
-
-        const data = await response.json();
-        setRequest(data.requests);
-      } catch (err) {
-        console.error(err);
-        setError('Failed to retrieve food items.');
-      } finally {
-        setLoading(false);
+  const fetchRequests = async () => {
+    setLoading(true);
+    try {
+      if (!authUser) {
+        return;
       }
-    };
 
-    fetchFood();
+      const response = await fetch(`/api/food/getRequest/${authUser._id}`);
+
+      if (!response.ok) {
+        throw new Error(`Failed to retrieve food items: ${response.statusText}`);
+      }
+
+      const data = await response.json();
+      setRequest(data.requests);
+    } catch (err) {
+      console.error(err);
+      setError('Failed to retrieve food items.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchRequests();
   }, [authUser]);
 
-  return { request, error, loading };
+  const reloadRequests = () => {
+    fetchRequests();
+  };
+
+  return { request, error, loading, reloadRequests };
 };
 
 export default useGetRequests;
