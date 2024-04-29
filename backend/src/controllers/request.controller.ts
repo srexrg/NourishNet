@@ -13,7 +13,7 @@ export const requestFood = async (req: UserAuthInfoRequest, res: Response) => {
         .json({ success: false, message: "Donation not found" });
     }
 
-    const { foodName, description, quantity, location, donorId } = donation;
+    const { foodName, description, quantity, location, donorId,sharedBy ,foodImage} = donation;
 
     const requesterId = req.user._id;
 
@@ -27,6 +27,8 @@ export const requestFood = async (req: UserAuthInfoRequest, res: Response) => {
       requesterId,
       foodName,
       description,
+      foodImage,
+      sharedBy,
       quantity,
       location,
       donorId,

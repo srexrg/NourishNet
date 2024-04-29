@@ -12,7 +12,8 @@ interface Food {
 }
 
 const useGetMyFoods = (): { food: Food[] | null; error: string | null; loading: boolean } => {
-    const { authUser } = useAuthContext() || {}; 
+    const { authUser } = useAuthContext() || {};
+    console.log(authUser)
     const [food, setFood] = useState<Food[] | null>(null);
     const [error, setError] = useState<string | null>(null);
     const [loading, setLoading] = useState(true);

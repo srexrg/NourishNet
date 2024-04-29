@@ -21,11 +21,11 @@ export function HomeLanding() {
           <Link className="hover:underline" to="/add">
             Add Food
           </Link>
-          <Link className="hover:underline" to="/request">
-            Request Food
-          </Link>
           <Link className="hover:underline" to="/home/myfood">
             My Foods
+          </Link>
+          <Link className="hover:underline" to="/home/myrequest">
+            My Requests 
           </Link>
           <Button
             className="rounded-full"

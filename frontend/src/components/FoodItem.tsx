@@ -40,9 +40,8 @@ const FoodItem: React.FunctionComponent<Props> = ({ food }) => {
     try {
       const response = await fetch(`/api/food/${food._id}`);
       const data = await response.json();
-      // Display the popup component with the details fetched from the API
       setShowPopup(true);
-      console.log(data); // Log the data fetched from the API
+      console.log(data); 
     } catch (error) {
       console.error("Error fetching food details:", error);
     }
@@ -75,7 +74,6 @@ const FoodItem: React.FunctionComponent<Props> = ({ food }) => {
           </CardContent>
         </Card>
       </div>
-      {/* Popup component */}
       {showPopup && (
         <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
           <div className="bg-gradient-to-br from-gray-200 to-gray-400 dark:from-gray-800 dark:to-gray-900 w-full max-w-md p-6 rounded-lg shadow-lg">

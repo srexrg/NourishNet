@@ -71,7 +71,7 @@ export function Login() {
                 {loading ? (
                   <span className="loading loading-spinner"></span>
                 ) : (
-                  "Create Account"
+                  "Login"
                 )}
               </Button>
             </form>

@@ -14,7 +14,10 @@ export const register = async (req: Request, res: Response) => {
   try {
     const { username, email, password } = registerSchema.parse(req.body);
 
-    const user = await User.findOne({ username });
+    const trimmeduser = username.trim()
+
+    const user =await User.findOne({ username: new RegExp('^' + trimmeduser + '$', 'i') });
+
 
     if (user) {
       return res.status(400).json({ error: "Username already exists" });

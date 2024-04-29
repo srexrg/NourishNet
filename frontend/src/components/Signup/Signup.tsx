@@ -3,6 +3,8 @@ import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import useSignup from "@/hooks/useSignup";
 import { Label } from "@radix-ui/react-dropdown-menu";
+import { zodResolver } from "@hookform/resolvers/zod"; 
+import { object, string } from "zod";
 import { useForm } from "react-hook-form";
 import image from "@/assets/signup.jpeg";
 
@@ -12,12 +14,18 @@ interface FormData {
   password: string;
 }
 
+const schema = object({
+  username: string().min(4,"Username must have atleast 4 characters"),
+  email: string().email("Invalid Email"),
+  password: string().min(6,"Must have atleast 6 characters"),
+});
+
 export function SignUp() {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormData>();
+  } = useForm<FormData>({resolver: zodResolver(schema)});
   const { loading, signup } = useSignup();
 
   const onSubmit = async (data: FormData) => {
@@ -65,9 +73,9 @@ export function SignUp() {
                   type="email"
                   {...register("email")}
                 />
-                {errors.email && (
+                {/* {errors.email && (
                   <span className="text-red-500">{errors.email.message}</span>
-                )}
+                )} */}
               </div>
               <div>
                 <label

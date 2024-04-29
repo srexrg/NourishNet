@@ -78,9 +78,8 @@ export const getFoodById = async (req: Request, res: Response) => {
 
 export const getFoodByCurrentUser = async (req:UserAuthInfoRequest, res:Response) => {
   try {
-    const currentUsername = req.user.username; // Assuming username is stored in req.user after authentication
+    const currentUsername = req.user.username; 
 
-    // Query donations associated with the current user's username
     const donations = await Donation.find({ sharedBy: currentUsername });
 
     if (donations.length === 0) {
