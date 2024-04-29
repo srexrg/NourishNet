@@ -1,5 +1,3 @@
-// MyRequests.tsx
-
 import React from "react";
 import useGetRequests  from "@/hooks/useGetRequests";
 import RequestCard from "../RequestCard";
@@ -10,7 +8,7 @@ const MyRequests: React.FC = () => {
   const { request, reloadRequests } = useGetRequests();
 
   const handleReloadRequests = () => {
-    reloadRequests(); // Function to reload requests after deletion
+    reloadRequests();
   };
 
   return (
@@ -23,7 +21,7 @@ const MyRequests: React.FC = () => {
           </Link>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-          {request ? (
+          {request && request.length > 0 ? (
             request.map((food, index) => (
               <RequestCard
                 key={`${food._id}-${index}`}
