@@ -7,6 +7,7 @@ interface Food {
   description: string;
   quantity: string;
   foodImage: string;
+  location:string;
   sharedBy: string;
 }
 

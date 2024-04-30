@@ -75,89 +75,78 @@ export default function AddFood() {
 
   return (
     <section className="bg-[#111827] text-white min-h-screen flex flex-col items-center justify-center">
-      <div className="max-w-4xl mx-auto p-8">
-        <div className="space-y-2 text-center">
-          <div>
-            <h1 className="text-5xl font-bold mb-4">Add Food</h1>
-            <p className="text-xl mb-8">
-              Join us in spreading kindness through sharing meals with your
-              community.
-            </p>
-            <form
-              className="space-y-6"
-              onSubmit={handleSubmit}
-              encType="multipart/form-data"
-            >
-              <div className="grid gap-6">
-                <div>
-                  <Label
-                    className="block text-sm font-medium mb-1"
-                    placeholder="name"
-                  >
-                    Name
-                  </Label>
-                  <Input
-                    id="name"
-                    name="foodName"
-                    onChange={handleInputChange}
-                    placeholder="Enter food item name"
-                    required
-                  />
-                </div>
-                <div>
-                  <label
-                    className="block text-sm font-medium mb-1"
-                    htmlFor="description"
-                  >
-                    Description
-                  </label>
-                  <Textarea
-                    id="description"
-                    name="description"
-                    onChange={handleInputChange}
-                    placeholder="Describe the food item"
-                    required
-                  />
-                </div>
-                <div>
-                  <Label
-                    className="block text-sm font-medium mb-1"
-                    htmlFor="location"
-                  >
-                    Location
-                  </Label>
-                  <Input
-                    id="location"
-                    name="location"
-                    onChange={handleInputChange}
-                    placeholder="Enter Location"
-                    type="text"
-                    required
-                  />
-                </div>
-                <div>
-                  <Label
-                    className="block text-sm font-medium mb-1"
-                    htmlFor="quantity"
-                  >
-                    Quantity
-                  </Label>
-                  <Input
-                    id="quantity"
-                    name="quantity"
-                    onChange={handleInputChange}
-                    placeholder="Enter Quantity"
-                    type="number"
-                    required
-                  />
-                </div>
-                <div>
-                  <Label
-                    className="block text-sm font-medium mb-1"
-                    htmlFor="photo"
-                  >
-                    Photo
-                  </Label>
+    <div className="max-w-4xl mx-auto p-8">
+      <div className="space-y-2 text-center">
+        <div>
+          <h1 className="text-5xl font-bold mb-4">Add Food</h1>
+          <p className="text-xl mb-8">
+            Join us in spreading kindness through sharing meals with your
+            community.
+          </p>
+          <form
+            className="space-y-6"
+            onSubmit={handleSubmit}
+            encType="multipart/form-data"
+          >
+            <div className="grid gap-6">
+              <div className="flex flex-col">
+                <Label className="text-sm font-medium text-gray-300" htmlFor="name">
+                  Name
+                </Label>
+                <Input
+                  id="name"
+                  name="foodName"
+                  onChange={handleInputChange}
+                  placeholder="Enter food item name"
+                  required
+                  className="mt-1 px-4 py-2 bg-gray-800 text-gray-300 rounded-lg focus:outline-none focus:ring focus:border-blue-500"
+                />
+              </div>
+              <div className="flex flex-col">
+                <Label className="text-sm font-medium text-gray-300" htmlFor="description">
+                  Description
+                </Label>
+                <Textarea
+                  id="description"
+                  name="description"
+                  onChange={handleInputChange}
+                  placeholder="Describe the food item"
+                  required
+                  className="mt-1 px-4 py-2 bg-gray-800 text-gray-300 rounded-lg focus:outline-none focus:ring focus:border-blue-500"
+                />
+              </div>
+              <div className="flex flex-col">
+                <Label className="text-sm font-medium text-gray-300" htmlFor="location">
+                  Location
+                </Label>
+                <Input
+                  id="location"
+                  name="location"
+                  onChange={handleInputChange}
+                  placeholder="Enter Location"
+                  type="text"
+                  required
+                  className="mt-1 px-4 py-2 bg-gray-800 text-gray-300 rounded-lg focus:outline-none focus:ring focus:border-blue-500"
+                />
+              </div>
+              <div className="flex flex-col">
+                <Label className="text-sm font-medium text-gray-300" htmlFor="quantity">
+                  Quantity
+                </Label>
+                <Input
+                  id="quantity"
+                  name="quantity"
+                  onChange={handleInputChange}
+                  placeholder="Enter Quantity"
+                  // type="number"
+                  required
+                  className="mt-1 px-4 py-2 bg-gray-800 text-gray-300 rounded-lg focus:outline-none focus:ring focus:border-blue-500"
+                />
+              </div>
+              <div className="flex flex-col">
+                <Label className="text-sm font-medium text-gray-300" htmlFor="photo">
+                  Photo
+                </Label>
                   <Input
                     id="photo"
                     name="foodImage"
@@ -168,6 +157,7 @@ export default function AddFood() {
                       }
                     }}
                     type="file"
+                    className="mt-1 px-4 py-2 bg-gray-800 text-gray-300 rounded-lg focus:outline-none focus:ring focus:border-blue-500"
                     required
                   />
                 </div>

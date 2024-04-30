@@ -118,7 +118,7 @@ export const Navbar = () => {
           </nav>
 
           <div className="hidden md:flex gap-2">
-            <Button onClick={()=>console.log("Clicked")}>
+            <Button>
             <Link
               to="/login"
               >

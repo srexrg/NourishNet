@@ -15,7 +15,6 @@ import IncomingRequests from "./components/Food/IncomingRequest";
 
 function App() {
   const { authUser } = useAuthContext() || {};
-  console.log(authUser)
   return (
     <div>
       <Routes>
@@ -30,27 +29,27 @@ function App() {
         />
         <Route
           path="/home"
-          element={authUser ? <Home /> : <Navigate to={"/login"} /> }
+          element={authUser ? <Home /> : <Navigate to={"/login"} />}
         />
         <Route
           path="/add"
-          element={authUser ? <AddFood /> : <Navigate to={"/login"} /> }
+          element={authUser ? <AddFood /> : <Navigate to={"/login"} />}
         />
         <Route
           path="/request"
-          element={authUser ? <RequestFood /> : <Navigate to={"/login"} /> }
+          element={authUser ? <RequestFood /> : <Navigate to={"/login"} />}
         />
         <Route
           path="/home/myfood"
-          element={authUser ? <MyFoods /> : <Navigate to={"/login"} /> }
+          element={authUser ? <MyFoods /> : <Navigate to={"/login"} />}
         />
         <Route
           path="/home/myrequest"
-          element={authUser ? <MyRequests /> : <Navigate to={"/login"} /> }
+          element={authUser ? <MyRequests /> : <Navigate to={"/login"} />}
         />
         <Route
           path="/home/incoming"
-          element={authUser ? <IncomingRequests /> : <Navigate to={"/login"} /> }
+          element={authUser ? <IncomingRequests /> : <Navigate to={"/login"} />}
         />
       </Routes>
       <Toaster />
