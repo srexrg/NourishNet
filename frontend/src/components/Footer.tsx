@@ -12,7 +12,7 @@ export const Footer = () => {
             className="font-bold text-xl flex"
           >
             <LogoIcon />
-            NourishNet
+            FoodNet
           </a>
         </div>
 
