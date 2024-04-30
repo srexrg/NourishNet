@@ -38,7 +38,7 @@ export function SignUp() {
           <div>
             <h1 className="text-5xl font-bold mb-4">Sign Up</h1>
             <p className="text-xl mb-8">
-              Join the FoodNet Community and start sharing your meals, recipes,
+              Join the NourishNet Community and start sharing your meals, recipes,
               and joy with locals.
             </p>
             <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
