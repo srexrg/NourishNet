@@ -5,7 +5,7 @@ export interface IDonation extends Document {
   donorId: Schema.Types.ObjectId;
   foodName: string;
   description: string;
-  quantity: string;
+  quantity: number;
   foodImage:string;
   location: string;
   sharedBy: string;
@@ -25,7 +25,7 @@ const donationSchema = new Schema<IDonation>({
   donorId: { type: Schema.Types.ObjectId, ref: 'User', required: true },
   foodName: { type: String, required: true },
   description: { type: String },
-  quantity: { type: String, required: true },
+  quantity: { type: Number, required: true },
   foodImage:{type:String,required:true},
   sharedBy: { type: String, required: true },
   location: { type: String, required: true },

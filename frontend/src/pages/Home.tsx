@@ -1,4 +1,4 @@
-import { HomeLanding } from "@/components/home-land"
+import { HomeLanding } from "@/components/component/home-land"
 
 
 

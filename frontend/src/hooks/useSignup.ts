@@ -45,6 +45,7 @@ const useSignup = () => {
       if (setAuthUser) {
         setAuthUser(data);
       }
+      console.log(data)
     }  catch(e){
        toast.error((e as Error).message);
     } finally {
