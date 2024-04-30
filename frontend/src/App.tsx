@@ -11,9 +11,11 @@ import AddFood from "./components/Food/Add-Food";
 import RequestFood from "./components/Food/Request-Food";
 import MyFoods from "./components/Food/MyFood";
 import MyRequests from "./components/Food/MyRequests";
+import IncomingRequests from "./components/Food/IncomingRequest";
 
 function App() {
   const { authUser } = useAuthContext() || {};
+  console.log(authUser)
   return (
     <div>
       <Routes>
@@ -45,6 +47,10 @@ function App() {
         <Route
           path="/home/myrequest"
           element={authUser ? <MyRequests /> : <Navigate to={"/login"} /> }
+        />
+        <Route
+          path="/home/incoming"
+          element={authUser ? <IncomingRequests /> : <Navigate to={"/login"} /> }
         />
       </Routes>
       <Toaster />

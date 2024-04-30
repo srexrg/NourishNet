@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { Request as RequestModel, Donation } from "../models/models";
+import { Request as RequestModel, Donation, User } from "../models/models";
 import { FoodRequest, UserAuthInfoRequest } from "../types/types";
 export const requestFood = async (req: UserAuthInfoRequest, res: Response) => {
   try {
@@ -23,9 +23,15 @@ export const requestFood = async (req: UserAuthInfoRequest, res: Response) => {
         .json({ success: false, message: "Missing required fields" });
     }
 
+    const requester = await User.findById(requesterId);
+
+    if (!requester) {
+      return res.status(404).json({ success: false, message: "Requester not found" });
+    }
     const newRequest = new RequestModel({
       requesterId,
       foodName,
+      requesterName: requester.username,
       description,
       foodImage,
       sharedBy,
@@ -167,6 +173,20 @@ export const getUserRequests = async (req: Request, res: Response) => {
   } catch (error) {
     res
       .status(500)
-      .json({ success: false, message: "Internal server error", error: error });
+      .json({ success: false, message: "Internal server error", error });
   }
 };
+
+export const getIncomingRequest = async (req: Request, res: Response) => {
+  try {
+    const donorId = req.params.id; 
+
+    const userRequests = await RequestModel.find({ donorId: donorId,status:"pending" }).populate('requesterId', 'username');
+    res.status(200).json({ success: true, requests: userRequests });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ success: false, message: "Internal server error", error });
+  }
+};
+
