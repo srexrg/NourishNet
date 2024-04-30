@@ -15,11 +15,7 @@ dotenv.config({
 });
 const app = express();
 
-app.use(cors({
-  origin:["https://nourish-net-platform.vercel.app"],
-  methods:["GET","POST","DELETE","PATCH"],
-  credentials:true
-}));
+app.use(cors());
 app.use(cookieParser())
 app.use(express.json({limit:"50mb"}));
 
