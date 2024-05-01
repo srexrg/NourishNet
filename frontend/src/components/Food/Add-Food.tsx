@@ -61,6 +61,7 @@ export default function AddFood() {
       });
 
       const data = await res.json();
+      console.log(data)
       if (data.error) {
         throw new Error(data.error);
       }
@@ -68,6 +69,7 @@ export default function AddFood() {
       navigate("/home");
     } catch (e) {
       toast.error((e as Error).message);
+      console.log(e)
     } finally {
       setLoading(false);
     }
