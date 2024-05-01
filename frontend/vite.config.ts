@@ -8,6 +8,7 @@ export default defineConfig({
     proxy: {
       "/api": {
         target: "https://nourish-net-backend.vercel.app",
+        changeOrigin: true,
       },
     },
   },
