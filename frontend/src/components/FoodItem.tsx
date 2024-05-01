@@ -18,6 +18,7 @@ interface Props {
 
 const FoodItem: React.FunctionComponent<Props> = ({ food }) => {
   const [showPopup, setShowPopup] = useState(false);
+  console.log(food._id)
 
   const handleRequestClick = async () => {
     try {

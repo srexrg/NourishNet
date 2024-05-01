@@ -14,8 +14,10 @@ export const requestFood = async (req: UserAuthInfoRequest, res: Response) => {
     }
 
     const { foodName, description, quantity, location, donorId,sharedBy ,foodImage} = donation;
+    console.log(foodName,description,quantity,donorId)
 
     const requesterId = req.user._id;
+    console.log(requesterId)
 
     if (!requesterId || !foodName || !quantity || !location || !donorId) {
       return res
