@@ -16,5 +16,6 @@
         "Access-Control-Allow-Origin": "*"
       }
         }
-    ]
+    ],
+    "regions": ["bom1"]
 }
