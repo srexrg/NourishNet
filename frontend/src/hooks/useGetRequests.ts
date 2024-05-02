@@ -27,7 +27,7 @@ const useGetRequests = () => {
         return;
       }
 
-      const response = await fetch(`/api/food/getRequest/${authUser._id}`);
+      const response = await fetch(`https://nourish-net-backend.vercel.app/api/food/getRequest/${authUser._id}`);
 
       if (!response.ok) {
         throw new Error(`Failed to retrieve food items: ${response.statusText}`);

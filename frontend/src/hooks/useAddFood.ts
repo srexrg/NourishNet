@@ -34,7 +34,7 @@ const useAddFood = () => {
       formData.append("location",location)
       formData.append("foodImage",foodImage)
 
-      const res = await fetch("/api/food/donate-food", {
+      const res = await fetch("https://nourish-net-backend.vercel.app/api/food/donate-food", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
