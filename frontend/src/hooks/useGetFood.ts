@@ -26,7 +26,7 @@ const useGetMyFoods = (): { food: Food[] | null; error: string | null; loading: 
             return;
           }
   
-          const response = await fetch('https://nourish-net-backend.vercel.app/api/food/user', {
+          const response = await fetch('/api/food/user', {
             headers: {
               Authorization: `Bearer ${authUser.token}`,
             },

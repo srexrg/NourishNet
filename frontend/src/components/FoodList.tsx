@@ -16,8 +16,7 @@ const FoodList: React.FC = () => {
   useEffect(() => {
     const fetchFood = async () => {
       try {
-        const response = await fetch('https://nourish-net-backend.vercel.app/api/food/', {
-        });
+        const response = await fetch('/api/food/');
   
         if (!response.ok) {
           throw new Error(`Failed to retrieve food items: ${response.statusText}`);
