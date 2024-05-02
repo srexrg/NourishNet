@@ -1,7 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { createContext, useContext, useState } from "react";
-
-// Define the type for AuthContextValue
 type AuthContextValue = {
   authUser: any;
   setAuthUser: React.Dispatch<any>;
