@@ -1,4 +1,4 @@
-import bcrypt, { hash } from "bcryptjs";
+import bcrypt from "bcryptjs";
 import { Request, Response } from "express";
 import { User } from "../models/models";
 import { z } from "zod";
@@ -32,7 +32,7 @@ export const register = async (req: Request, res: Response) => {
       email,
       password: hashedPassword,
     });
-    generateTokenAndSetCookie(newUser._id, res);
+    generateTokenAndSetCookie(newUser._id, req);
     await newUser.save();
 
     return res.status(201).json({
@@ -62,7 +62,8 @@ export const login = async (req: Request, res: Response) => {
       return res.status(400).json({ error: "Invalid credentials" });
     }
 
-    generateTokenAndSetCookie(user._id, res);
+    generateTokenAndSetCookie(user._id, req);
+    console.log(req.cookies.jwt)
     res.status(200).json({
       _id: user._id,
       username: user.username,
