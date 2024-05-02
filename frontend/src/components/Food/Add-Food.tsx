@@ -55,7 +55,7 @@ export default function AddFood() {
     }
     setLoading(true);
     try {
-      const res = await fetch("/api/food/donate-food", {
+      const res = await fetch("https://nourishnet-vt0k.onrender.com/api/food/donate-food", {
         method: "POST",
         body: formData,
       });

@@ -22,7 +22,7 @@ const FoodItem: React.FunctionComponent<Props> = ({ food }) => {
 
   const handleRequestClick = async () => {
     try {
-      const response = await fetch(`/api/food/request/${food._id}`, {
+      const response = await fetch(`https://nourishnet-vt0k.onrender.com/api/food/request/${food._id}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -39,7 +39,7 @@ const FoodItem: React.FunctionComponent<Props> = ({ food }) => {
 
   const handleViewClick = async () => {
     try {
-      const response = await fetch(`/api/food/${food._id}`);
+      const response = await fetch(`https://nourishnet-vt0k.onrender.com/api/food/${food._id}`);
       const data = await response.json();
       setShowPopup(true);
       console.log(data); 

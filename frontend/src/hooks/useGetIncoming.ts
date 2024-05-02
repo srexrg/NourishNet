@@ -33,7 +33,7 @@ const UseGetIncoming = () => {
                 return;
             }
 
-            const response = await fetch(`/api/food/getIncomingRequests/${authUser._id}`);
+            const response = await fetch(`https://nourishnet-vt0k.onrender.com/api/food/getIncomingRequests/${authUser._id}`);
             if (!response.ok) {
                 throw new Error(`Failed to retrieve food items: ${response.statusText}`);
             }

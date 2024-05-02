@@ -27,7 +27,7 @@ const IncomingCard: React.FC<Props> = ({ request, reloadRequests }: Props) => {
   const handleAcceptRequest = async () => {
     setLoading(true);
     try {
-      const response = await fetch(`/api/food/accept/${_id}`, {
+      const response = await fetch(`https://nourishnet-vt0k.onrender.com/api/food/accept/${_id}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -51,7 +51,7 @@ const IncomingCard: React.FC<Props> = ({ request, reloadRequests }: Props) => {
   const DeclineRequest = async () => {
     setLoading(true);
     try {
-      const response = await fetch(`/api/food/decline/${_id}`, {
+      const response = await fetch(`https://nourishnet-vt0k.onrender.com/api/food/decline/${_id}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

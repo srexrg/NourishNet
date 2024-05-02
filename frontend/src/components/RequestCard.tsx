@@ -24,7 +24,7 @@ const RequestCard: React.FC<Props> = ({ request, reloadRequests }: Props) => {
   const handleDeleteRequest = async () => {
     setLoading(true);
     try {
-      const response = await fetch(`/api/food/deleteRequest/${_id}`, {
+      const response = await fetch(`https://nourishnet-vt0k.onrender.com/api/food/deleteRequest/${_id}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",

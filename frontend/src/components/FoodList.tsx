@@ -16,7 +16,7 @@ const FoodList: React.FC = () => {
   useEffect(() => {
     const fetchFood = async () => {
       try {
-        const response = await fetch('/api/food/');
+        const response = await fetch('https://nourishnet-vt0k.onrender.com/api/food/');
   
         if (!response.ok) {
           throw new Error(`Failed to retrieve food items: ${response.statusText}`);
