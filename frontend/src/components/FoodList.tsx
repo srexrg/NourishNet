@@ -14,7 +14,7 @@ const FoodList: React.FC = () => {
   const [foods, setFoods] = useState<Food[]>([]);
 
   useEffect(() => {
-    fetch("https://nourish-net-backend.vercel.app/api/food/")
+    fetch("/api/food/")
       .then((response) => response.json())
       .then((data) => setFoods(data))
       .catch((error) => console.error("Error fetching foods:", error));
