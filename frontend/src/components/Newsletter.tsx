@@ -18,7 +18,7 @@ export const JoinUs = () => {
           Be part of our community and make a difference.
         </p>
         <Button>
-        <Link to="/signin">Join Us</Link>
+        <Link to="/signup">Join Us</Link>
 
         </Button>
 

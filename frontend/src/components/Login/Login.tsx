@@ -1,6 +1,7 @@
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import { FaSpinner } from "react-icons/fa";
 import useLogin from "@/hooks/UseLogin";
 import { Label } from "@radix-ui/react-dropdown-menu";
 import { useForm } from "react-hook-form";
@@ -69,7 +70,7 @@ export function Login() {
               </div>
               <Button className="w-full">
                 {loading ? (
-                  <span className="loading loading-spinner"></span>
+                  <FaSpinner className="animate-spin"/>
                 ) : (
                   "Login"
                 )}

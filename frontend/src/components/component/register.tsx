@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import useSignup from "@/hooks/useSignup";
 import { Label } from "@radix-ui/react-dropdown-menu";
 import { useForm } from "react-hook-form";
+import { FaSpinner } from "react-icons/fa";
 
 interface FormData {
   username: string;
@@ -89,7 +90,7 @@ export function Register() {
               </div>
               <Button className="w-full">
                 {loading ? (
-                  <span className="loading loading-spinner"></span>
+                   <FaSpinner className="animate-spin"/>
                 ) : (
                   "Create Account"
                 )}
