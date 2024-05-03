@@ -10,22 +10,12 @@ export const addFood = async (req: UserAuthInfoRequest, res: Response) => {
 
       const { _id: donorId, username } = req.user;
 
-    const imagePath = req.file?.path;
-
-    if (!imagePath) {
-      throw new Error("Image required");
-    }
-
-    const foodPic = await uploadOnCloudinary(imagePath)
-
-    if (!foodPic) {
-      throw new Error("Failed to upload image");
-    }
+      const foodImage = req.body.foodImage;
 
     const newDonation = new Donation({
       donorId,
       foodName,
-      foodImage:foodPic.url,
+      foodImage,
       description,
       quantity,
       location,

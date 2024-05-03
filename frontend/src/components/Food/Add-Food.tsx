@@ -4,13 +4,15 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "../ui/textarea";
 import { useState } from "react";
+
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router";
 import { useAuthContext } from "@/context/AuthContext";
 
 export default function AddFood() {
-  const {authUser} = useAuthContext()||{}
-  const navigate = useNavigate()
+  const { authUser } = useAuthContext() || {};
+  const [imageUrl, setImageUrl] = useState("");
+  const navigate = useNavigate();
 
   const [loading, setLoading] = useState(false);
 
@@ -27,6 +29,32 @@ export default function AddFood() {
     setInput({ ...input, [name]: value });
   };
 
+  const handleImageUpload = async () => {
+    if (!input.foodImage) return;
+
+    const data = new FormData();
+    data.append("file", input.foodImage);
+    data.append("upload_preset", "nourishNet");
+    data.append("cloud_name", "diqlka3bc");
+
+    try {
+      const response = await fetch(
+        "https://api.cloudinary.com/v1_1/diqlka3bc/image/upload",
+        {
+          method: "POST",
+          body: data,
+        }
+      );
+      const imageData = await response.json();
+      console.log(imageData);
+      console.log(imageData.secure_url);
+      setImageUrl(imageData.secure_url);
+    } catch (error) {
+      toast.error((error as Error).message);
+      console.error("Error uploading image:", error);
+    }
+  };
+
   const handleImage = (e: { target: { files: any[] } }) => {
     const file = e.target.files?.[0];
     setInput({ ...input, foodImage: file || null });
@@ -34,6 +62,7 @@ export default function AddFood() {
 
   const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
+
     if (
       !input.foodName ||
       !input.description ||
@@ -45,13 +74,17 @@ export default function AddFood() {
       return;
     }
 
+    setLoading(true);
+
+    await handleImageUpload();
+
     const formData = new FormData();
     formData.append("foodName", input.foodName);
     formData.append("description", input.description);
     formData.append("quantity", input.quantity);
     formData.append("location", input.location);
     if (input.foodImage) {
-      formData.append("foodImage", input.foodImage);
+      formData.append("foodImage", imageUrl);
     } else {
       formData.append("foodImage", "");
     }
@@ -59,13 +92,14 @@ export default function AddFood() {
     try {
       const res = await fetch("http://localhost:3000/api/food/donate-food", {
         method: "POST",
+        headers: {
+          Authorization: `Bearer ${authUser.token}`,
+        },
         body: formData,
-          headers:{
-            Authorization: `Bearer ${authUser.token}`,}
       });
 
       const data = await res.json();
-      console.log(data)
+      console.log(data);
       if (data.error) {
         throw new Error(data.error);
       }
@@ -73,7 +107,7 @@ export default function AddFood() {
       navigate("/home");
     } catch (e) {
       toast.error((e as Error).message);
-      console.log(e)
+      console.log(e);
     } finally {
       setLoading(false);
     }

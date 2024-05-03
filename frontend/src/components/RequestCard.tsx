@@ -26,7 +26,7 @@ const RequestCard: React.FC<Props> = ({ request, reloadRequests }: Props) => {
   const handleDeleteRequest = async () => {
     setLoading(true);
     try {
-      const response = await fetch(`http://localhost:3000/api/food/deleteRequest/${_id}`, {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/food/deleteRequest/${_id}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${authUser.token}`,

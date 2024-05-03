@@ -30,7 +30,7 @@ const IncomingCard: React.FC<Props> = ({ request, reloadRequests }: Props) => {
     setLoading(true);
     try {
       const response = await fetch(
-        `https://localhost:3000/api/food/accept/${_id}`,
+        `${import.meta.env.VITE_BACKEND_URL}/api/food/accept/${_id}`,
         {
           method: "POST",
           headers: {
@@ -58,7 +58,7 @@ const IncomingCard: React.FC<Props> = ({ request, reloadRequests }: Props) => {
     setLoading(true);
     try {
       const response = await fetch(
-        `http://localhost:3000/api/food/decline/${_id}`,
+        `${import.meta.env.VITE_BACKEND_URL}/api/food/decline/${_id}`,
         {
           method: "POST",
           headers: {

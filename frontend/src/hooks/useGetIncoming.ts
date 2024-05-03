@@ -33,7 +33,7 @@ const UseGetIncoming = () => {
                 return;
             }
 
-            const response = await fetch(`http://localhost:3000/api/food/getIncomingRequests/${authUser._id}`, {
+            const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/food/getIncomingRequests/${authUser._id}`, {
                 headers: {
                     Authorization: `Bearer ${authUser.token}`,
                 }

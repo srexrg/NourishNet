@@ -26,7 +26,7 @@ const useGetMyFoods = (): { food: Food[] | null; error: string | null; loading: 
           return;
         }
 
-        const response = await fetch('http://localhost:3000/api/food/user', {
+        const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/food/user`, {
           headers: {
             Authorization: `Bearer ${authUser.token}`,
           },
