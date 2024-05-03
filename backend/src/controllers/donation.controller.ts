@@ -1,17 +1,16 @@
 import { Donation } from "../models/models";
 import { Request, Response } from "express";
 import { FoodRequest, UserAuthInfoRequest } from "../types/types";
-import { uploadOnCloudinary } from "../utils/cloudinary";
 
 export const addFood = async (req: UserAuthInfoRequest, res: Response) => {
   try {
-    const { foodName, description, quantity, location, donationDate } =
+    const { foodName, description, quantity, location, donationDate,foodImage } =
       req.body;
 
+      console.log(req.body)
+
       const { _id: donorId, username } = req.user;
-
-      const foodImage = req.body.foodImage;
-
+      
     const newDonation = new Donation({
       donorId,
       foodName,

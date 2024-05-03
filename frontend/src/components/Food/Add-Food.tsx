@@ -90,7 +90,7 @@ export default function AddFood() {
     }
     setLoading(true);
     try {
-      const res = await fetch("http://localhost:3000/api/food/donate-food", {
+      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/food/donate-food`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${authUser.token}`,

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import FoodItem from "./FoodItem";
 import { useAuthContext } from "@/context/AuthContext";
+import { FaSpinner } from "react-icons/fa";
 
 interface Food {
   _id: string;
@@ -13,11 +14,13 @@ interface Food {
 
 const FoodList: React.FC = () => {
   const { authUser } = useAuthContext() || {};
+  const [loading, setLoading] = useState(false);
   console.log(authUser.token);
   const [foods, setFoods] = useState<Food[] | null>(null);
 
   useEffect(() => {
     const fetchFood = async () => {
+      setLoading(true);
       try {
         const response = await fetch(
           `${import.meta.env.VITE_BACKEND_URL}/api/food/`,
@@ -45,6 +48,8 @@ const FoodList: React.FC = () => {
       } catch (err) {
         console.error("Error fetching food items:", err);
         setFoods([]);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -55,18 +60,22 @@ const FoodList: React.FC = () => {
     <section className="py-16">
       <div className="container mx-auto px-4">
         <h2 className="text-2xl font-bold mb-8">Available Food</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-          {foods ? (
-            foods.map(
-              (food, index) => (
-                console.log(foods),
-                (<FoodItem key={`${food._id}-${index}`} food={food} />)
+        {loading ? (
+          <FaSpinner className="animate-spin" />
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+            {foods ? (
+              foods.map(
+                (food, index) => (
+                  console.log(foods),
+                  (<FoodItem key={`${food._id}-${index}`} food={food} />)
+                )
               )
-            )
-          ) : (
-            <p>You dont have any food items yet.</p>
-          )}
-        </div>
+            ) : (
+              <p>You dont have any food items yet.</p>
+            )}
+          </div>
+        )}
       </div>
     </section>
   );
