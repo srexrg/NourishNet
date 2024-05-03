@@ -13,7 +13,7 @@ interface Request {
     status: string;
     requesterId: {
         username: string;
-      };
+    };
 }
 
 const UseGetIncoming = () => {
@@ -33,7 +33,11 @@ const UseGetIncoming = () => {
                 return;
             }
 
-            const response = await fetch(`https://nourishnet-vt0k.onrender.com/api/food/getIncomingRequests/${authUser._id}`);
+            const response = await fetch(`http://localhost:3000/api/food/getIncomingRequests/${authUser._id}`, {
+                headers: {
+                    Authorization: `Bearer ${authUser.token}`,
+                }
+            });
             if (!response.ok) {
                 throw new Error(`Failed to retrieve food items: ${response.statusText}`);
             }
@@ -56,9 +60,9 @@ const UseGetIncoming = () => {
 
     const reloadRequests = () => {
         FetchIncoming();
-      };
+    };
 
-    return { request, error, loading,reloadRequests };
+    return { request, error, loading, reloadRequests };
 }
 
 export default UseGetIncoming

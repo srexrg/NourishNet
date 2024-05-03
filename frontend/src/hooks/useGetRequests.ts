@@ -27,7 +27,10 @@ const useGetRequests = () => {
         return;
       }
 
-      const response = await fetch(`https://nourishnet-vt0k.onrender.com/api/food/getRequest/${authUser._id}`);
+      const response = await fetch(`http://localhost:3000/api/food/getRequest/${authUser._id}`,{
+        headers:{
+          Authorization: `Bearer ${authUser.token}`,}
+      });
 
       if (!response.ok) {
         throw new Error(`Failed to retrieve food items: ${response.statusText}`);

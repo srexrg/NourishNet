@@ -17,8 +17,6 @@ export const requestFood = async (req: UserAuthInfoRequest, res: Response) => {
     console.log(foodName,description,quantity,donorId)
 
     const requesterId = req.user._id;
-    console.log(requesterId)
-
     if (!requesterId || !foodName || !quantity || !location || !donorId) {
       return res
         .status(400)
@@ -137,6 +135,7 @@ export const deleteRequest = async (
 ) => {
   try {
     const reqId = req.params.id;
+    console.log(reqId)
 
     if (!reqId) {
       return res.status(404).json({

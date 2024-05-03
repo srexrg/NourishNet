@@ -14,7 +14,9 @@ const protectedRoute = async (
   next: NextFunction
 ) => {
   try {
-    const token = req.cookies.jwt;
+    let token = req.headers["authorization"]
+    token =token?.split(" ")[1]
+    console.log(token)
 
     if (!token) {
       return res.status(401).json({ error: "No token" });

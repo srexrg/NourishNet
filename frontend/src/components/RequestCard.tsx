@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { Card, CardContent } from "./ui/card";
 import { Button } from "./ui/button";
 import toast from "react-hot-toast";
+import { useAuthContext } from "@/context/AuthContext";
 
 interface Request {
   _id: string;
@@ -16,6 +17,7 @@ interface Request {
 }
 
 const RequestCard: React.FC<Props> = ({ request, reloadRequests }: Props) => { 
+  const {authUser} =useAuthContext()||{}
   const [loading, setLoading] = useState(false);
 
   const { foodName, description, quantity, foodImage, sharedBy, status, _id } =
@@ -24,19 +26,21 @@ const RequestCard: React.FC<Props> = ({ request, reloadRequests }: Props) => {
   const handleDeleteRequest = async () => {
     setLoading(true);
     try {
-      const response = await fetch(`https://nourishnet-vt0k.onrender.com/api/food/deleteRequest/${_id}`, {
+      const response = await fetch(`http://localhost:3000/api/food/deleteRequest/${_id}`, {
         method: "DELETE",
         headers: {
+          Authorization: `Bearer ${authUser.token}`,
           "Content-Type": "application/json",
         },
       });
+      console.log(response)
       if (!response.ok) {
         throw new Error("Failed to delete request");
       }
       toast.success("Food Deleted successfully!");
       reloadRequests(); 
     } catch (error) {
-      console.error("Error Deleting food request:", error);
+      console.log("Error Deleting food request:", error);
       toast.error("Error deleting food");
     } finally {
       setLoading(false);

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Button } from "./ui/button";
 import { Card, CardContent } from "./ui/card";
 import toast from "react-hot-toast";
+import { useAuthContext } from "@/context/AuthContext";
 
 interface Food {
   _id: string;
@@ -17,15 +18,18 @@ interface Props {
 }
 
 const FoodItem: React.FunctionComponent<Props> = ({ food }) => {
+  const {authUser} = useAuthContext()||{}
   const [showPopup, setShowPopup] = useState(false);
   console.log(food._id)
 
   const handleRequestClick = async () => {
     try {
-      const response = await fetch(`https://nourishnet-vt0k.onrender.com/api/food/request/${food._id}`, {
+      const response = await fetch(`http://localhost:3000/api/food/request/${food._id}`, {
+
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${authUser.token}`,
         },
       });
       const data = await response.json();
@@ -39,7 +43,13 @@ const FoodItem: React.FunctionComponent<Props> = ({ food }) => {
 
   const handleViewClick = async () => {
     try {
-      const response = await fetch(`https://nourishnet-vt0k.onrender.com/api/food/${food._id}`);
+      const response = await fetch(`http://localhost:3000/api/food/${food._id}`,{
+
+      headers:{
+        Authorization: `Bearer ${authUser.token}`,
+      }
+
+      });
       const data = await response.json();
       setShowPopup(true);
       console.log(data); 

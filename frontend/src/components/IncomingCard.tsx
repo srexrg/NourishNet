@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import { Card, CardContent } from "./ui/card";
 import { Button } from "./ui/button";
 import toast from "react-hot-toast";
-import { FaSpinner } from 'react-icons/fa';
+import { FaSpinner } from "react-icons/fa";
+import { useAuthContext } from "@/context/AuthContext";
 
 interface Request {
   _id: string;
@@ -18,28 +19,33 @@ interface Request {
 }
 
 const IncomingCard: React.FC<Props> = ({ request, reloadRequests }: Props) => {
+  const { authUser } = useAuthContext() || {};
   const [loading, setLoading] = useState(false);
   const [isHidden, setIsHidden] = useState(false);
-  const [AcceptbuttonText, setAcceptButtonText] = useState("Accept")
-  const [DeclinebuttonText, setDeclineButtonText] = useState("Decline")
+  const [AcceptbuttonText, setAcceptButtonText] = useState("Accept");
+  const [DeclinebuttonText, setDeclineButtonText] = useState("Decline");
   const { foodName, description, quantity, foodImage, status, _id } = request;
 
   const handleAcceptRequest = async () => {
     setLoading(true);
     try {
-      const response = await fetch(`https://nourishnet-vt0k.onrender.com/api/food/accept/${_id}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await fetch(
+        `https://localhost:3000/api/food/accept/${_id}`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${authUser.token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
       if (!response.ok) {
         throw new Error("Failed to Accept request");
       }
       toast.success("Request Accepted successfully!");
       reloadRequests();
-      setIsHidden(true)
-      setAcceptButtonText("Accepted")
+      setIsHidden(true);
+      setAcceptButtonText("Accepted");
     } catch (error) {
       console.error("Error Accepting food request:", error);
       toast.error("Error Accepting food Request");
@@ -51,19 +57,23 @@ const IncomingCard: React.FC<Props> = ({ request, reloadRequests }: Props) => {
   const DeclineRequest = async () => {
     setLoading(true);
     try {
-      const response = await fetch(`https://nourishnet-vt0k.onrender.com/api/food/decline/${_id}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await fetch(
+        `http://localhost:3000/api/food/decline/${_id}`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${authUser.token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
       if (!response.ok) {
         throw new Error("Failed to Accept request");
       }
       toast.success("Request Declined successfully!");
       reloadRequests();
-      setIsHidden(true)
-      setDeclineButtonText("Declined")
+      setIsHidden(true);
+      setDeclineButtonText("Declined");
     } catch (error) {
       console.error("Error Declining food request:", error);
       toast.error("Error Declining food");
@@ -72,8 +82,8 @@ const IncomingCard: React.FC<Props> = ({ request, reloadRequests }: Props) => {
     }
   };
 
-  if(isHidden){
-    return null
+  if (isHidden) {
+    return null;
   }
 
   return (
@@ -104,10 +114,18 @@ const IncomingCard: React.FC<Props> = ({ request, reloadRequests }: Props) => {
             </p>
             <div className="flex justify-center gap-4">
               <Button onClick={handleAcceptRequest} disabled={loading}>
-                {loading ? <FaSpinner className="animate-spin" /> : AcceptbuttonText}
+                {loading ? (
+                  <FaSpinner className="animate-spin" />
+                ) : (
+                  AcceptbuttonText
+                )}
               </Button>
               <Button onClick={DeclineRequest} disabled={loading}>
-                {loading ? <FaSpinner className="animate-spin" /> : DeclinebuttonText}
+                {loading ? (
+                  <FaSpinner className="animate-spin" />
+                ) : (
+                  DeclinebuttonText
+                )}
               </Button>
             </div>
           </div>

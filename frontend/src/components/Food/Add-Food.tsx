@@ -6,8 +6,10 @@ import { Textarea } from "../ui/textarea";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router";
+import { useAuthContext } from "@/context/AuthContext";
 
 export default function AddFood() {
+  const {authUser} = useAuthContext()||{}
   const navigate = useNavigate()
 
   const [loading, setLoading] = useState(false);
@@ -55,9 +57,11 @@ export default function AddFood() {
     }
     setLoading(true);
     try {
-      const res = await fetch("https://nourishnet-vt0k.onrender.com/api/food/donate-food", {
+      const res = await fetch("http://localhost:3000/api/food/donate-food", {
         method: "POST",
         body: formData,
+          headers:{
+            Authorization: `Bearer ${authUser.token}`,}
       });
 
       const data = await res.json();

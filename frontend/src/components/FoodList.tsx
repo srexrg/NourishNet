@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import FoodItem from "./FoodItem";
+import { useAuthContext } from "@/context/AuthContext";
 
 interface Food {
   _id: string;
@@ -11,12 +12,19 @@ interface Food {
 }
 
 const FoodList: React.FC = () => {
+  const {authUser} = useAuthContext() || {}
+  console.log(authUser.token)
   const [foods, setFoods] = useState<Food[] | null>(null);
 
   useEffect(() => {
     const fetchFood = async () => {
       try {
-        const response = await fetch('https://nourishnet-vt0k.onrender.com/api/food/');
+        const response = await fetch('http://localhost:3000/api/food/',{
+          headers: {
+            Authorization: `Bearer ${authUser.token}`,
+          },
+          
+        });
   
         if (!response.ok) {
           throw new Error(`Failed to retrieve food items: ${response.statusText}`);
@@ -31,7 +39,7 @@ const FoodList: React.FC = () => {
     };
   
     fetchFood();
-  }, []);
+  }, [authUser]);
   
   
 

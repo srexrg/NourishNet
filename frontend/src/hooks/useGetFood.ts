@@ -1,8 +1,8 @@
-import  { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useAuthContext } from '@/context/AuthContext';
 
 interface Food {
-    _id: string;
+  _id: string;
   foodName: string;
   description: string;
   quantity: string;
@@ -12,44 +12,44 @@ interface Food {
 }
 
 const useGetMyFoods = (): { food: Food[] | null; error: string | null; loading: boolean } => {
-    const { authUser } = useAuthContext() || {};
-    console.log(authUser)
-    const [food, setFood] = useState<Food[] | null>(null);
-    const [error, setError] = useState<string | null>(null);
-    const [loading, setLoading] = useState(true);
-  
-    useEffect(() => {
-      const fetchFood = async () => {
-        setLoading(true); 
-        try {
-          if (!authUser) {
-            return;
-          }
-  
-          const response = await fetch('https://nourishnet-vt0k.onrender.com/api/food/user', {
-            headers: {
-              Authorization: `Bearer ${authUser.token}`,
-            },
-          });
-  
-          if (!response.ok) {
-            throw new Error(`Failed to retrieve food items: ${response.statusText}`);
-          }
-  
-          const data = await response.json();
-          setFood(data);
-        } catch (err) {
-          console.error(err);
-          setError('Failed to retrieve food items.');
-        } finally {
-          setLoading(false); 
+  const { authUser } = useAuthContext() || {};
+  console.log(authUser.token)
+  const [food, setFood] = useState<Food[] | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchFood = async () => {
+      setLoading(true);
+      try {
+        if (!authUser) {
+          return;
         }
-      };
-  
-      fetchFood();
-    }, [authUser]); 
-  
-    return { food, error, loading }; 
-  };
-  
-  export default useGetMyFoods;
+
+        const response = await fetch('http://localhost:3000/api/food/user', {
+          headers: {
+            Authorization: `Bearer ${authUser.token}`,
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error(`Failed to retrieve food items: ${response.statusText}`);
+        }
+
+        const data = await response.json();
+        setFood(data);
+      } catch (err) {
+        console.error(err);
+        setError('Failed to retrieve food items.');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchFood();
+  }, [authUser]);
+
+  return { food, error, loading };
+};
+
+export default useGetMyFoods;

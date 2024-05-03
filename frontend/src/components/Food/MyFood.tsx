@@ -21,7 +21,7 @@ const MyFoods: React.FC = () => {
               <MyDonation key={`${food._id}-${index}`} food={food} />
             ))
           ) : (
-            <p>You haven't requested any food items yet.</p>
+            <p>You haven't added any food items yet.</p>
           )}
         </div>
       </div>
