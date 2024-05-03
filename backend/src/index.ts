@@ -33,7 +33,7 @@ app.get("/", (req, res) => {
   res.send("Hello");
 });
 
-app.post("/api/food/donate-food", protectedRoute, upload.single("foodImage"), addFood as any);
+app.post("/api/food/donate-food", protectedRoute, addFood as any);
 app.use("/api/auth", authRoutes);
 app.use("/api/food", foodRoutes);
 

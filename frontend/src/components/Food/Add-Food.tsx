@@ -11,7 +11,6 @@ import { useAuthContext } from "@/context/AuthContext";
 
 export default function AddFood() {
   const { authUser } = useAuthContext() || {};
-  const [imageUrl, setImageUrl] = useState("");
   const navigate = useNavigate();
 
   const [loading, setLoading] = useState(false);
@@ -46,9 +45,13 @@ export default function AddFood() {
         }
       );
       const imageData = await response.json();
-      console.log(imageData);
-      console.log(imageData.secure_url);
-      setImageUrl(imageData.secure_url);
+
+      console.log(imageData.url);
+      if (imageData.url) {
+        return imageData.url;
+      } else {
+        throw new Error("URL not found in Cloudinary response");
+      }
     } catch (error) {
       toast.error((error as Error).message);
       console.error("Error uploading image:", error);
@@ -74,28 +77,23 @@ export default function AddFood() {
       return;
     }
 
-    setLoading(true);
+     const ImageUrl =  await handleImageUpload();
 
-    await handleImageUpload();
-
-    const formData = new FormData();
-    formData.append("foodName", input.foodName);
-    formData.append("description", input.description);
-    formData.append("quantity", input.quantity);
-    formData.append("location", input.location);
-    if (input.foodImage) {
-      formData.append("foodImage", imageUrl);
-    } else {
-      formData.append("foodImage", "");
-    }
     setLoading(true);
     try {
       const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/food/donate-food`, {
         method: "POST",
         headers: {
+          "Content-Type": "application/json",
           Authorization: `Bearer ${authUser.token}`,
         },
-        body: formData,
+        body: JSON.stringify({
+          foodName: input.foodName,
+          description: input.description,
+          quantity: input.quantity,
+          location: input.location,
+          foodImage: ImageUrl,
+        }),
       });
 
       const data = await res.json();
@@ -126,7 +124,7 @@ export default function AddFood() {
             <form
               className="space-y-6"
               onSubmit={handleSubmit}
-              encType="multipart/form-data"
+              // encType="multipart/form-data"
             >
               <div className="grid gap-6">
                 <div>
