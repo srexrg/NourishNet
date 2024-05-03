@@ -20,9 +20,11 @@ interface Props {
 const FoodItem: React.FunctionComponent<Props> = ({ food }) => {
   const {authUser} = useAuthContext()||{}
   const [showPopup, setShowPopup] = useState(false);
+  const[loading,setLoading]=useState(false)
   console.log(food._id)
 
   const handleRequestClick = async () => {
+    setLoading(true)
     try {
       const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/food/request/${food._id}`, {
 
@@ -38,6 +40,8 @@ const FoodItem: React.FunctionComponent<Props> = ({ food }) => {
     } catch (error) {
       console.error("Error sending food request:", error);
       toast.error("Error requesting food");
+    }finally{
+      setLoading(false)
     }
   };
 
@@ -78,7 +82,7 @@ const FoodItem: React.FunctionComponent<Props> = ({ food }) => {
               <div className="flex justify-center mt-4">
                 <Button onClick={handleViewClick}>View</Button>
                 <Button onClick={handleRequestClick} className="ml-4">
-                  Request
+                  {loading?"Requesting":"Request"}
                 </Button>
               </div>
             </div>

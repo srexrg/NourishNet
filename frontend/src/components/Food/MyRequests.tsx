@@ -1,11 +1,11 @@
 import React from "react";
-import useGetRequests  from "@/hooks/useGetRequests";
+import useGetRequests from "@/hooks/useGetRequests";
 import RequestCard from "../RequestCard";
 import { Link } from "react-router-dom";
-import { FaHome } from "react-icons/fa";
+import { FaHome, FaSpinner } from "react-icons/fa";
 
 const MyRequests: React.FC = () => {
-  const { request, reloadRequests } = useGetRequests();
+  const { request, reloadRequests, loading } = useGetRequests();
 
   const handleReloadRequests = () => {
     reloadRequests();
@@ -20,19 +20,24 @@ const MyRequests: React.FC = () => {
             <FaHome className="text-white text-xl" />
           </Link>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-          {request && request.length > 0 ? (
-            request.map((food, index) => (
-              <RequestCard
-                key={`${food._id}-${index}`}
-                request={food}
-                reloadRequests={handleReloadRequests} 
-              />
-            ))
-          ) : (
-            <p>You haven't made any food requests yet.</p>
-          )}
-        </div>
+
+        {loading ? (
+          <FaSpinner className="animate-spin" />
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+            {request && request.length > 0 ? (
+              request.map((food, index) => (
+                <RequestCard
+                  key={`${food._id}-${index}`}
+                  request={food}
+                  reloadRequests={handleReloadRequests}
+                />
+              ))
+            ) : (
+              <p>You haven't made any food requests yet.</p>
+            )}
+          </div>
+        )}
       </div>
     </section>
   );

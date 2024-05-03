@@ -1,7 +1,4 @@
 import { Button } from "@/components/ui/button";
-// import { Toggle } from "@/components/ui/toggle";
-import { CardContent, Card } from "@/components/ui/card";
-import { AvatarImage, AvatarFallback, Avatar } from "@/components/ui/avatar";
 import { Link } from "react-router-dom";
 import useLogout from "@/hooks/useLogout";
 import { SVGProps } from "react";
@@ -15,7 +12,7 @@ export function HomeLanding() {
     <>
       <header className="flex items-center justify-between px-4 py-3 bg-gray-900 text-white">
         <Link className="text-xl font-bold" to="/">
-          Community Food Share
+          NourishNet
         </Link>
         <nav className="flex items-center space-x-4">
           <Link className="hover:underline" to="/add">
@@ -58,97 +55,6 @@ export function HomeLanding() {
           </div>
         </section>
         <FoodList />
-        <section className="py-16  bg-gray-900">
-          <div className="container mx-auto px-4">
-            <h2 className="text-2xl font-bold mb-8">My Foods</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-              <Card>
-                <CardContent>
-                  <h3 className="text-xl font-bold mb-2">Fresh Produce</h3>
-                  <p className="text-gray-600 mb-4">
-                    Organic fruits and vegetables, ready to be shared.
-                  </p>
-                  <div className="flex items-center space-x-2">
-                    <Avatar>
-                      <AvatarImage
-                        alt="User Avatar"
-                        src="/placeholder-avatar.jpg"
-                      />
-                      <AvatarFallback>JD</AvatarFallback>
-                    </Avatar>
-                    <div>
-                      <p className="text-gray-600">Shared by</p>
-                      <p className="font-bold">John Doe</p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-              <Card>
-                <CardContent>
-                  <h3 className="text-xl font-bold mb-2">Baked Goods</h3>
-                  <p className="text-gray-600 mb-4">
-                    Freshly baked bread, pastries, and more.
-                  </p>
-                  <div className="flex items-center space-x-2">
-                    <Avatar>
-                      <AvatarImage
-                        alt="User Avatar"
-                        src="/placeholder-avatar.jpg"
-                      />
-                      <AvatarFallback>JA</AvatarFallback>
-                    </Avatar>
-                    <div>
-                      <p className="text-gray-600">Shared by</p>
-                      <p className="font-bold">Jane Appleseed</p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-              <Card>
-                <CardContent>
-                  <h3 className="text-xl font-bold mb-2">Canned Goods</h3>
-                  <p className="text-gray-600 mb-4">
-                    Non-perishable canned foods, ready to be shared.
-                  </p>
-                  <div className="flex items-center space-x-2">
-                    <Avatar>
-                      <AvatarImage
-                        alt="User Avatar"
-                        src="/placeholder-avatar.jpg"
-                      />
-                      <AvatarFallback>SM</AvatarFallback>
-                    </Avatar>
-                    <div>
-                      <p className="text-gray-600">Shared by</p>
-                      <p className="font-bold">Sarah Miller</p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-              <Card>
-                <CardContent>
-                  <h3 className="text-xl font-bold mb-2">Dairy Products</h3>
-                  <p className="text-gray-600 mb-4">
-                    Fresh milk, cheese, and other dairy items.
-                  </p>
-                  <div className="flex items-center space-x-2">
-                    <Avatar>
-                      <AvatarImage
-                        alt="User Avatar"
-                        src="/placeholder-avatar.jpg"
-                      />
-                      <AvatarFallback>DL</AvatarFallback>
-                    </Avatar>
-                    <div>
-                      <p className="text-gray-600">Shared by</p>
-                      <p className="font-bold">David Levine</p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-          </div>
-        </section>
       </main>
       <footer className="bg-gray-900 text-white py-6">
         <div className="container mx-auto px-4 text-center">

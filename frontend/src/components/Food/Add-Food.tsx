@@ -124,7 +124,6 @@ export default function AddFood() {
             <form
               className="space-y-6"
               onSubmit={handleSubmit}
-              // encType="multipart/form-data"
             >
               <div className="grid gap-6">
                 <div>
