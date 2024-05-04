@@ -4,7 +4,7 @@ import { SignUp } from "./components/Signup/Signup";
 import { useAuthContext } from "./context/AuthContext";
 import { Toaster } from "react-hot-toast";
 import LandingPage from "./pages/LandingPage";
-
+import { Analytics } from "@vercel/analytics/react"
 import { Navigate, Route, Routes } from "react-router";
 import Home from "./pages/Home";
 import AddFood from "./components/Food/Add-Food";
@@ -54,6 +54,7 @@ function App() {
         />
       </Routes>
       <Toaster />
+      <Analytics/>
     </div>
   );
 }
