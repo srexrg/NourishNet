@@ -6,6 +6,7 @@ import useLogin from "@/hooks/UseLogin";
 import { Label } from "@radix-ui/react-dropdown-menu";
 import { useForm } from "react-hook-form";
 import image from "@/assets/login.jpeg";
+import { useTheme } from "@/components/theme-provider"; // Import useTheme hook
 
 interface FormData {
   username: string;
@@ -19,12 +20,17 @@ export function Login() {
     formState: { errors },
   } = useForm<FormData>();
   const { loading, login } = useLogin();
+  const { theme } = useTheme(); 
 
   const onSubmit = async (data: FormData) => {
     await login(data);
   };
+  
+  const inputClasses = theme === 'light' ? 'text-black bg-white dark:bg-gray-700' : '';
+  const passwordClasses = theme === 'light' ? 'text-black bg-white dark:bg-gray-700' : '';
+
   return (
-    <section className="bg-[#111827] text-white min-h-screen flex flex-col items-center justify-center">
+    <section className={`bg-[#111827] text-white min-h-screen flex flex-col items-center justify-center ${theme === 'dark' ? 'dark:border-b-slate-700 dark:bg-[#111827]' : ''}`}>
       <div className="max-w-4xl mx-auto p-8">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
           <div>
@@ -40,6 +46,7 @@ export function Login() {
                 </Label>
                 <Input
                   id="name"
+                  className={inputClasses}
                   placeholder="John Doe"
                   {...register("username")}
                 />
@@ -58,6 +65,7 @@ export function Login() {
                 </label>
                 <Input
                   id="password"
+                  className={passwordClasses}
                   placeholder="••••••••••"
                   type="password"
                   {...register("password")}

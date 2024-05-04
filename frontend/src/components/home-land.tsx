@@ -12,7 +12,7 @@ export function HomeLanding() {
     <>
       <header className="flex items-center justify-between px-4 py-3 bg-gray-900 text-white">
         <Link className="text-xl font-bold" to="/">
-          FoodNet
+          NourishNet
         </Link>
         <nav className="flex items-center space-x-4">
           <Link className="hover:underline" to="/add">
@@ -60,7 +60,7 @@ export function HomeLanding() {
       </main>
       <footer className="bg-gray-900 text-white py-6">
         <div className="container mx-auto px-4 text-center">
-          <p>© 2024 FoodNet. All rights reserved.</p>
+          <p>© 2024 NourishNet. All rights reserved.</p>
         </div>
       </footer>
     </>

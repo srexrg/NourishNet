@@ -7,6 +7,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { object, string } from "zod";
 import { useForm } from "react-hook-form";
 import image from "@/assets/signup.jpeg";
+import { useTheme } from "../theme-provider";
+import { FaSpinner } from "react-icons/fa";
 
 interface FormData {
   username: string;
@@ -28,9 +30,18 @@ export function SignUp() {
   } = useForm<FormData>({resolver: zodResolver(schema)});
   const { loading, signup } = useSignup();
 
+  const{ theme }= useTheme()
+
   const onSubmit = async (data: FormData) => {
     await signup(data);
   };
+
+  const emailClasses = theme === 'light' ? 'text-black bg-white dark:bg-gray-700' : '';
+  const inputClasses = theme === 'light' ? 'text-black bg-white dark:bg-gray-700' : '';
+  const passwordClasses = theme === 'light' ? 'text-black bg-white dark:bg-gray-700' : '';
+
+
+
   return (
     <section className="bg-[#111827] text-white min-h-screen flex flex-col items-center justify-center">
       <div className="max-w-4xl mx-auto p-8">
@@ -38,7 +49,7 @@ export function SignUp() {
           <div>
             <h1 className="text-5xl font-bold mb-4">Sign Up</h1>
             <p className="text-xl mb-8">
-              Join the FoodNet Community and start sharing your meals, recipes,
+              Join the NourishNet Community and start sharing your meals, recipes,
               and joy with locals.
             </p>
             <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
@@ -51,6 +62,7 @@ export function SignUp() {
                 </Label>
                 <Input
                   id="name"
+                  className={inputClasses}
                   placeholder="John Doe"
                   {...register("username")}
                 />
@@ -70,12 +82,13 @@ export function SignUp() {
                 <Input
                   id="email"
                   placeholder="john.doe@example.com"
+                  className={emailClasses}
                   type="email"
                   {...register("email")}
                 />
-                {/* {errors.email && (
+                {errors.email && (
                   <span className="text-red-500">{errors.email.message}</span>
-                )} */}
+                )}
               </div>
               <div>
                 <label
@@ -86,6 +99,7 @@ export function SignUp() {
                 </label>
                 <Input
                   id="password"
+                  className={passwordClasses}
                   placeholder="••••••••••"
                   type="password"
                   {...register("password")}
@@ -97,15 +111,15 @@ export function SignUp() {
                 )}
               </div>
               <Button className="w-full">
-                {loading ? (
-                  <span className="loading loading-spinner"></span>
+              {loading ? (
+                  <FaSpinner className="animate-spin"/>
                 ) : (
                   "Create Account"
                 )}
               </Button>
             </form>
             <p className="text-sm text-gray-400 mt-6">
-              Already have an account?
+              Already have an account ?{" "}
               <Link className="text-green-500 hover:underline" to="/login">
                 Log in
               </Link>

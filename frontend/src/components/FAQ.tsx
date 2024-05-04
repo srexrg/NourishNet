@@ -14,7 +14,7 @@ interface FAQProps {
 const FAQList: FAQProps[] = [
   {
     question: "How can I donate food to your program?",
-    answer: "You can donate food by visiting our donation centers or scheduling a pickup with our volunteers.",
+    answer: "You can donate food by signing up on our website.",
     value: "item-1",
   },
   {
@@ -32,7 +32,7 @@ const FAQList: FAQProps[] = [
   },
   {
     question: "How can I request food assistance for myself or someone else?",
-    answer: "You can request food assistance by contacting our support team or visiting one of our distribution centers.",
+    answer: "You can request food assistance requesting from the available foods on the website.",
     value: "item-4",
   },
   {

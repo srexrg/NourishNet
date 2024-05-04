@@ -8,10 +8,14 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router";
 import { useAuthContext } from "@/context/AuthContext";
+import { useTheme } from "../theme-provider";
 
 export default function AddFood() {
   const { authUser } = useAuthContext() || {};
   const navigate = useNavigate();
+  const {theme} = useTheme()
+
+  const styleClasses = theme === 'light' ? 'text-black bg-white dark:bg-gray-700' : '';
 
   const [loading, setLoading] = useState(false);
 
@@ -112,7 +116,7 @@ export default function AddFood() {
   };
 
   return (
-    <section className="bg-[#111827] text-white min-h-screen flex flex-col items-center justify-center">
+    <section className={`bg-[#111827] text-white min-h-screen flex flex-col items-center justify-center ${theme === 'dark' ? 'dark:border-b-slate-700 dark:bg-[#111827]' : ''}`}>
       <div className="max-w-4xl mx-auto p-8">
         <div className="space-y-2 text-center">
           <div>
@@ -121,35 +125,24 @@ export default function AddFood() {
               Join us in spreading kindness through sharing meals with your
               community.
             </p>
-            <form
-              className="space-y-6"
-              onSubmit={handleSubmit}
-            >
+            <form className="space-y-6" onSubmit={handleSubmit}>
               <div className="grid gap-6">
                 <div>
-                  <Label
-                    className="block text-sm font-medium mb-1"
-                    placeholder="name"
-                  >
-                    Name
-                  </Label>
+                  <Label htmlFor="name">Name</Label>
                   <Input
                     id="name"
                     name="foodName"
+                    className={styleClasses}
                     onChange={handleInputChange}
                     placeholder="Enter food item name"
                     required
                   />
                 </div>
                 <div>
-                  <label
-                    className="block text-sm font-medium mb-1"
-                    htmlFor="description"
-                  >
-                    Description
-                  </label>
+                  <Label htmlFor="description">Description</Label>
                   <Textarea
                     id="description"
+                    className={styleClasses}
                     name="description"
                     onChange={handleInputChange}
                     placeholder="Describe the food item"
@@ -157,15 +150,11 @@ export default function AddFood() {
                   />
                 </div>
                 <div>
-                  <Label
-                    className="block text-sm font-medium mb-1"
-                    htmlFor="location"
-                  >
-                    Location
-                  </Label>
+                  <Label htmlFor="location">Location</Label>
                   <Input
                     id="location"
                     name="location"
+                    className={styleClasses}
                     onChange={handleInputChange}
                     placeholder="Enter Location"
                     type="text"
@@ -173,31 +162,23 @@ export default function AddFood() {
                   />
                 </div>
                 <div>
-                  <Label
-                    className="block text-sm font-medium mb-1"
-                    htmlFor="quantity"
-                  >
-                    Quantity
-                  </Label>
+                  <Label htmlFor="quantity">Quantity</Label>
                   <Input
                     id="quantity"
                     name="quantity"
+                    className={styleClasses}
                     onChange={handleInputChange}
                     placeholder="Enter Quantity"
-                    type="number"
+                    type="text"
                     required
                   />
                 </div>
                 <div>
-                  <Label
-                    className="block text-sm font-medium mb-1"
-                    htmlFor="photo"
-                  >
-                    Photo
-                  </Label>
+                  <Label htmlFor="photo">Photo</Label>
                   <Input
                     id="photo"
                     name="foodImage"
+                    className={styleClasses}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                       if (e.target.files) {
                         const filesArray = Array.from(e.target.files);
@@ -210,11 +191,7 @@ export default function AddFood() {
                 </div>
               </div>
               <Button className="w-full" type="submit" disabled={loading}>
-                {loading ? (
-                  <span className="loading loading-spinner">Sharing</span>
-                ) : (
-                  "Share Food"
-                )}
+                {loading ? <span className="loading loading-spinner">Sharing</span> : "Share Food"}
               </Button>
             </form>
           </div>

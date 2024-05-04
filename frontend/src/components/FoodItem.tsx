@@ -9,6 +9,7 @@ interface Food {
   foodName: string;
   description: string;
   quantity: string;
+  location:string
   foodImage: string;
   sharedBy: string;
 }
@@ -116,6 +117,12 @@ const FoodItem: React.FunctionComponent<Props> = ({ food }) => {
               </p>
               <p className="text-gray-800 dark:text-gray-300">
                 {food.quantity}
+              </p>
+              <p className="text-gray-600 dark:text-gray-400 font-semibold">
+                Location:
+              </p>
+              <p className="text-gray-800 dark:text-gray-300">
+                {food.location}
               </p>
               <p className="text-gray-600 dark:text-gray-400 font-semibold">
                 Shared By:
