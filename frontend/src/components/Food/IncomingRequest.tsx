@@ -1,11 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { FaHome } from "react-icons/fa";
+import { FaHome, FaSpinner } from "react-icons/fa";
 import UseGetIncoming from "@/hooks/useGetIncoming";
 import IncomingCard from "../IncomingCard";
 
 const IncomingRequests: React.FC = () => {
-  const { request, reloadRequests } = UseGetIncoming();
+  const { request, reloadRequests,loading } = UseGetIncoming();
 
   const handleReloadRequests = () => {
     reloadRequests();
@@ -20,6 +20,10 @@ const IncomingRequests: React.FC = () => {
             <FaHome className="text-white text-xl" />
           </Link>
         </div>
+
+        {loading ? (
+          <FaSpinner className="animate-spin" />
+        ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
           {request && request.length > 0 ? (
             request.map((food, index) => (
@@ -33,6 +37,7 @@ const IncomingRequests: React.FC = () => {
             <p>You dont have any incoming requests items yet.</p>
           )}
         </div>
+        )}
       </div>
     </section>
   );
