@@ -9,6 +9,7 @@ import toast from "react-hot-toast";
 import { useNavigate } from "react-router";
 import { useAuthContext } from "@/context/AuthContext";
 import { useTheme } from "../theme-provider";
+import { FaSpinner } from "react-icons/fa";
 
 export default function AddFood() {
   const { authUser } = useAuthContext() || {};
@@ -191,7 +192,7 @@ export default function AddFood() {
                 </div>
               </div>
               <Button className="w-full" type="submit" disabled={loading}>
-                {loading ? <span className="loading loading-spinner">Sharing</span> : "Share Food"}
+                {loading ?  <FaSpinner className="animate-spin" /> : "Share Food"}
               </Button>
             </form>
           </div>
