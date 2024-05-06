@@ -4,10 +4,14 @@ import { Link } from "react-router-dom";
 import useLogout from "@/hooks/useLogout";
 import { ModeToggle } from "../mode-toggle";
 import FoodList from "../FoodList";
+import { useTheme } from "../theme-provider";
 
 export function HomeLanding() {
   const { logout } = useLogout();
   const [menuOpen, setMenuOpen] = useState(false);
+  const {theme} = useTheme()
+
+  const styleClasses = theme === 'light' ? 'text-white' : 'hover:underline';
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
@@ -20,16 +24,16 @@ export function HomeLanding() {
           NourishNet
         </Link>
         <nav className="hidden md:flex items-center space-x-4">
-          <Link className="hover:underline" to="/add">
+          <Link className={styleClasses} to="/add">
             Add Food
           </Link>
-          <Link className="hover:underline" to="/home/myfood">
+          <Link className={styleClasses} to="/home/myfood">
             My Foods
           </Link>
-          <Link className="hover:underline" to="/home/incoming">
+          <Link className={styleClasses} to="/home/incoming">
             Incoming Requests
           </Link>
-          <Link className="hover:underline" to="/home/myrequest">
+          <Link className={styleClasses} to="/home/myrequest">
             My Requests
           </Link>
           <Button
@@ -38,8 +42,7 @@ export function HomeLanding() {
             variant="ghost"
             onClick={logout}
           >
-            <LogOutIcon className="w-5 h-5" />
-            <span className="sr-only">Logout</span>
+            <LogOutIcon className="w-5 h-5 text-white" />
           </Button>
           <ModeToggle />
         </nav>
@@ -72,16 +75,16 @@ export function HomeLanding() {
       {menuOpen && (
         <nav className="md:hidden bg-gray-900 absolute w-full left-0 top-16">
           <div className="flex flex-col items-center space-y-2">
-            <Link className="hover:underline" to="/add">
+            <Link className={styleClasses} to="/add">
               Add Food
             </Link>
-            <Link className="hover:underline" to="/home/myfood">
+            <Link className={styleClasses} to="/home/myfood">
               My Foods
             </Link>
-            <Link className="hover:underline" to="/home/incoming">
+            <Link className={styleClasses} to="/home/incoming">
               Incoming Requests
             </Link>
-            <Link className="hover:underline" to="/home/myrequest">
+            <Link className={styleClasses} to="/home/myrequest">
               My Requests
             </Link>
             <Button
