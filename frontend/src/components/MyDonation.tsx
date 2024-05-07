@@ -1,5 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { Card, CardContent } from "./ui/card";
+import { useAuthContext } from "@/context/AuthContext";
+import toast from "react-hot-toast";
+import { Button } from "./ui/button";
 
 interface Food {
   _id: string;
@@ -10,9 +13,35 @@ interface Food {
   sharedBy: string;
 }
 
-const MyDonation: React.FC<Props> = ({ food }: Props) => {
+const MyDonation: React.FC<Props> = ({ food,reloadRequests }: Props) => {
 
-  const { foodName, description, quantity, foodImage, sharedBy } = food;
+  const { _id,foodName, description, quantity, foodImage, sharedBy } = food;
+  const {authUser} =useAuthContext()||{}
+  const [loading, setLoading] = useState(false);
+
+  const handleDeleteDonation = async () => {
+    setLoading(true);
+    try {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/food/delete/${_id}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${authUser.token}`,
+          "Content-Type": "application/json",
+        },
+      });
+      console.log(response)
+      if (!response.ok) {
+        throw new Error("Failed to delete request");
+      }
+      toast.success("Food Deleted successfully!");
+      reloadRequests(); 
+    } catch (error) {
+      console.log("Error Deleting food request:", error);
+      toast.error("Error deleting food");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="bg-gradient-to-br from-gray-200 to-gray-400 dark:from-gray-800 dark:to-gray-900 shadow-lg rounded-lg overflow-hidden">
@@ -36,6 +65,9 @@ const MyDonation: React.FC<Props> = ({ food }: Props) => {
             <p className="text-gray-600 dark:text-gray-400 mb-2">
               Shared by: <span className="font-bold">{sharedBy}</span> 
             </p>
+            <Button onClick={handleDeleteDonation} disabled={loading}> 
+              {loading ? "Deleting" : "Delete Request"}
+            </Button>
           </div>
         </CardContent>
       </Card>
@@ -45,6 +77,7 @@ const MyDonation: React.FC<Props> = ({ food }: Props) => {
 
 export interface Props {
   food: Food;
+  reloadRequests: () => void; 
 }
 
 export default MyDonation;

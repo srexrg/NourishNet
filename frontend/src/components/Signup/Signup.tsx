@@ -58,7 +58,7 @@ export function SignUp() {
                   className="block text-sm font-medium mb-1"
                   placeholder="name"
                 >
-                  Full Name
+                  Username
                 </Label>
                 <Input
                   id="name"

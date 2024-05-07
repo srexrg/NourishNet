@@ -11,14 +11,13 @@ interface Food {
 
 }
 
-const useGetMyFoods = (): { food: Food[] | null; error: string | null; loading: boolean } => {
+const useGetMyFoods = (): { food: Food[] | null; error: string | null; loading: boolean;reloadRequests: () => void } => {
   const { authUser } = useAuthContext() || {};
   console.log(authUser.token)
   const [food, setFood] = useState<Food[] | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
     const fetchFood = async () => {
       setLoading(true);
       try {
@@ -46,10 +45,15 @@ const useGetMyFoods = (): { food: Food[] | null; error: string | null; loading: 
       }
     };
 
-    fetchFood();
-  }, [authUser]);
+    useEffect(() => {
+      fetchFood();
+    }, [authUser]);
+  
+    const reloadRequests = () => {
+      fetchFood();
+    };
 
-  return { food, error, loading };
+  return { food, error, loading,reloadRequests};
 };
 
 export default useGetMyFoods;
