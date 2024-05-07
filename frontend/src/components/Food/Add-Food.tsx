@@ -9,14 +9,14 @@ import toast from "react-hot-toast";
 import { useNavigate } from "react-router";
 import { useAuthContext } from "@/context/AuthContext";
 import { useTheme } from "../theme-provider";
-import { FaSpinner } from "react-icons/fa";
+import {  FaSpinner } from "react-icons/fa";
 
 export default function AddFood() {
   const { authUser } = useAuthContext() || {};
   const navigate = useNavigate();
   const {theme} = useTheme()
 
-  const styleClasses = theme === 'light' ? 'text-black bg-white dark:bg-gray-700' : '';
+  const styleClasses = theme === 'light' ? 'text-black bg-white dark:bg-gray-700' : 'block w-full rounded-md border border-gray-100 bg-black py-2.5 pl-10 pr-12 text-sm shadow-lg font-medium focus:border-black focus:outline-none focus:ring-0';
 
   const [loading, setLoading] = useState(false);
 
@@ -123,8 +123,7 @@ export default function AddFood() {
           <div>
             <h1 className="text-5xl font-bold mb-4">Add Food</h1>
             <p className="text-xl mb-8">
-              Join us in spreading kindness through sharing meals with your
-              community.
+                  Join us in spreading kindness through sharing meals with your community
             </p>
             <form className="space-y-6" onSubmit={handleSubmit}>
               <div className="grid gap-6">
