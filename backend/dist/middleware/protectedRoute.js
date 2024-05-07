@@ -12,14 +12,29 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const mongoose_1 = __importDefault(require("mongoose"));
-const connectDB = () => __awaiter(void 0, void 0, void 0, function* () {
+const models_1 = require("../models/models");
+const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
+const protectedRoute = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        yield mongoose_1.default.connect(process.env.MONGODB_URL || "");
-        console.log("Connected to MongoDB");
+        let token = req.headers["authorization"];
+        token = token === null || token === void 0 ? void 0 : token.split(" ")[1];
+        console.log(token);
+        if (!token) {
+            return res.status(401).json({ error: "No token" });
+        }
+        const decoded = jsonwebtoken_1.default.verify(token, process.env.JWT_SECRET || "");
+        if (!decoded) {
+            return res.status(401).json({ error: "invalid token" });
+        }
+        const user = yield models_1.User.findById(decoded.userId).select("-password");
+        if (!user) {
+            return res.status(401).json({ error: "No user" });
+        }
+        req.user = user;
+        next();
     }
     catch (error) {
-        console.log("Unable to connect to MONGODB", error);
+        console.log(error);
     }
 });
-exports.default = connectDB;
+exports.default = protectedRoute;

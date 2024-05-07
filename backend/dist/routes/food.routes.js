@@ -1,0 +1,22 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = __importDefault(require("express"));
+const protectedRoute_1 = __importDefault(require("../middleware/protectedRoute"));
+const donation_controller_1 = require("../controllers/donation.controller");
+const request_controller_1 = require("../controllers/request.controller");
+const router = express_1.default.Router();
+router.get("/", protectedRoute_1.default, donation_controller_1.getAllFood);
+router.get("/user", protectedRoute_1.default, donation_controller_1.getFoodByCurrentUser);
+router.get("/:id", protectedRoute_1.default, donation_controller_1.getFoodById);
+router.patch("/update/:id", protectedRoute_1.default, donation_controller_1.updateFood);
+router.delete("/delete/:id", protectedRoute_1.default, donation_controller_1.deleteFood);
+router.post("/request/:id", protectedRoute_1.default, request_controller_1.requestFood);
+router.get("/getRequest/:id", protectedRoute_1.default, request_controller_1.getUserRequests);
+router.get("/getIncomingRequests/:id", protectedRoute_1.default, request_controller_1.getIncomingRequest);
+router.post("/accept/:id", protectedRoute_1.default, request_controller_1.acceptRequest);
+router.post("/decline/:id", protectedRoute_1.default, request_controller_1.declineRequest);
+router.delete("/deleteRequest/:id", protectedRoute_1.default, request_controller_1.deleteRequest);
+exports.default = router;

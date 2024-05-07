@@ -113,7 +113,8 @@ export const updateFood = async (req: UserAuthInfoRequest, res: Response) => {
 
 export const deleteFood = async (req: Request, res: Response) => {
   try {
-    const donation = await Donation.findByIdAndDelete(req.params.id);
+    const donationId = req.params.id;
+    const donation = await Donation.findByIdAndDelete(donationId);
     if (!donation) {
       return res.status(404).json({ error: "Donation not found" });
     }
