@@ -1,0 +1,58 @@
+version: "3.8"
+
+services:
+
+  web:
+    depends_on: 
+      - api
+    build: ./frontend
+    ports:
+      - 5173:5173
+    # env_file: ./frontend/.env
+
+    # environment:
+    #   VITE_API_URL: http://localhost:8000
+
+    develop:
+      watch:
+        - path: ./frontend/package.json
+          action: rebuild
+        - path: ./frontend/package-lock.json
+          action: rebuild
+        - path: ./frontend
+          target: /app
+          action: sync
+
+  api: 
+    depends_on: 
+      - db
+    build: ./backend
+    ports: 
+      - 3000:3000
+    env_file: ./backend/.env
+    environment: 
+      - MONGODB_URL=${MONGODB_URL}
+      - JWT_SECRET=${JWT_SECRET}
+      - NODE_ENV=${NODE_ENV}
+      - CLOUDINARY_CLOUD_NAME=${CLOUDINARY_CLOUD_NAME}
+      - CLOUDINARY_API_KEY=${CLOUDINARY_API_KEY}
+      - CLOUDINARY_API_SECRET=${CLOUDINARY_API_SECRET}
+    develop:
+      watch:
+        - path: ./backend/package.json
+          action: rebuild
+        - path: ./backend/package-lock.json
+          action: rebuild
+        - path: ./backend
+          target: /app
+          action: sync
+
+  db:
+    image: mongo:latest
+    ports:
+      - 27017:27017
+    volumes:
+      - donation:/data/db
+
+volumes:
+  donation:

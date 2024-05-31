@@ -66,7 +66,7 @@ const MyDonation: React.FC<Props> = ({ food,reloadRequests }: Props) => {
               Shared by: <span className="font-bold">{sharedBy}</span> 
             </p>
             <Button onClick={handleDeleteDonation} disabled={loading}> 
-              {loading ? "Deleting" : "Delete Request"}
+              {loading ? "Deleting" : "Delete Donation"}
             </Button>
           </div>
         </CardContent>

@@ -4,7 +4,10 @@ import { defineConfig } from "vite";
 
 export default defineConfig({
   plugins: [react()],
-  server: {
+    server: {
+      watch: {
+        usePolling: true,
+      },
     proxy: {
     },
   },
