@@ -4,7 +4,6 @@ import { Button } from "./ui/button";
 import { Card, CardContent } from "./ui/card";
 import toast from "react-hot-toast";
 import { useAuthContext } from "@/context/AuthContext";
-import { Badge } from "./ui/badge";
 import { FaSpinner } from "react-icons/fa";
 
 interface Food {
@@ -39,6 +38,7 @@ const FoodItem: React.FunctionComponent<Props> = ({ food }) => {
           },
         }
       );
+      console.log(response)
       toast.success("Food requested successfully!");
     } catch (error) {
       console.error("Error sending food request:", error);
