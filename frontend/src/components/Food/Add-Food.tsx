@@ -10,6 +10,7 @@ import {
   CardHeader,
   CardTitle,
   CardDescription,
+  CardFooter,
 } from "@/components/ui/card";
 import {
   MdCloudUpload,
@@ -17,30 +18,34 @@ import {
   MdDescription,
   MdLocationOn,
   MdNumbers,
+  MdHome,
+  MdImage,
 } from "react-icons/md";
 
 import toast from "react-hot-toast";
-import { useNavigate } from "react-router";
+import { useNavigate, Link } from "react-router-dom";
 import { useAuthContext } from "@/context/AuthContext";
 import { FaSpinner } from "react-icons/fa";
 
 export default function AddFood() {
   const { authUser } = useAuthContext() || {};
   const navigate = useNavigate();
-
   const [loading, setLoading] = useState(false);
+  const [previewImage, setPreviewImage] = useState<string | null>(null);
 
   const [input, setInput] = useState({
     foodName: "",
     description: "",
     quantity: "",
     location: "",
-    foodImage: null,
+    foodImage: null as File | null,
   });
 
-  const handleInputChange = (e: { target: { name: any; value: any } }) => {
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { name, value } = e.target;
-    setInput({ ...input, [name]: value });
+    setInput((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleImageUpload = async () => {
@@ -60,8 +65,6 @@ export default function AddFood() {
         }
       );
       const imageData = await response.json();
-
-      console.log(imageData.url);
       if (imageData.url) {
         return imageData.url;
       } else {
@@ -70,20 +73,26 @@ export default function AddFood() {
     } catch (error) {
       toast.error((error as Error).message);
       console.error("Error uploading image:", error);
+      throw error;
     }
   };
 
-  const handleImage = (e: { target: { files: any[] } }) => {
+  const handleImage = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    setInput({ ...input, foodImage: file || null });
+    if (file) {
+      setInput((prev) => ({ ...prev, foodImage: file }));
+      // Create preview URL
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setPreviewImage(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
-  const handleSubmit = async (e: { preventDefault: () => void }) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
-    if (loading) {
-      return;
-    }
+    if (loading) return;
 
     if (
       !input.foodName ||
@@ -118,7 +127,6 @@ export default function AddFood() {
       );
 
       const data = await res.json();
-      console.log(data);
       if (data.error) {
         throw new Error(data.error);
       }
@@ -126,110 +134,148 @@ export default function AddFood() {
       navigate("/home");
     } catch (e) {
       toast.error((e as Error).message);
-      console.log(e);
+      console.error(e);
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <section
-      className={`bg-[#111827] min-h-screen flex flex-col items-center justify-center p-4`}
-    >
-      <Card className="w-full max-w-2xl shadow-xl">
-        <CardHeader>
-          <CardTitle className="text-3xl font-bold text-center">
-            Share a Meal
-          </CardTitle>
-          <CardDescription className="text-center">
-            Spread kindness through sharing meals with your community
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <form className="space-y-6" onSubmit={handleSubmit}>
-            <div className="space-y-4">
-              <div className="relative">
-                <MdFoodBank className="absolute top-2.5 left-3 text-gray-500" />
-                <Input
-                  id="name"
-                  name="foodName"
-                  className="pl-10"
-                  onChange={handleInputChange}
-                  placeholder="Food item name"
-                  required
-                />
-              </div>
-              <div className="relative">
-                <MdDescription className="absolute top-2.5 left-3 text-gray-500" />
-                <Textarea
-                  id="description"
-                  name="description"
-                  className="pl-10 min-h-[100px]"
-                  onChange={handleInputChange}
-                  placeholder="Describe the food item"
-                  required
-                />
-              </div>
-              <div className="relative">
-                <MdLocationOn className="absolute top-2.5 left-3 text-gray-500" />
-                <Input
-                  id="location"
-                  name="location"
-                  className="pl-10"
-                  onChange={handleInputChange}
-                  placeholder="Enter Location"
-                  type="text"
-                  required
-                />
-              </div>
-              <div className="relative">
-                <MdNumbers className="absolute top-2.5 left-3 text-gray-500" />
-                <Input
-                  id="quantity"
-                  name="quantity"
-                  className="pl-10"
-                  onChange={handleInputChange}
-                  placeholder="Enter Quantity"
-                  type="text"
-                  required
-                />
-              </div>
-              <div>
-                <Label htmlFor="photo" className="block mb-2">
-                  Photo
-                </Label>
-                <div className="relative">
-                  <Input
-                    id="photo"
-                    name="foodImage"
-                    className="hidden"
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                      if (e.target.files) {
-                        const filesArray = Array.from(e.target.files);
-                        handleImage({ target: { files: filesArray } });
-                      }
-                    }}
-                    type="file"
-                    required
-                  />
-                  <Button
-                    type="button"
-                    onClick={() => document.getElementById("photo")?.click()}
-                    className="w-full flex items-center justify-center"
-                  >
-                    <MdCloudUpload className="mr-2" />
-                    Upload Food Image
-                  </Button>
+    <div className="min-h-screen bg-background py-8 px-4">
+      <div className="max-w-2xl mx-auto">
+        <div className="flex justify-between items-center mb-6">
+          <h1 className="text-3xl font-bold">Share a Meal</h1>
+          <Button variant="outline" size="icon" asChild>
+            <Link to="/home">
+              <MdHome className="h-5 w-5" />
+              <span className="sr-only">Home</span>
+            </Link>
+          </Button>
+        </div>
+
+        <Card>
+          <CardHeader>
+            <CardTitle>Donation Details</CardTitle>
+            <CardDescription>
+              Fill in the details about the food you'd like to share
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <form onSubmit={handleSubmit} className="space-y-6">
+              <div className="space-y-4">
+                <div className="space-y-2">
+                  <Label htmlFor="foodName">Food Name</Label>
+                  <div className="relative">
+                    <MdFoodBank className="absolute left-3 top-3 text-muted-foreground" />
+                    <Input
+                      id="foodName"
+                      name="foodName"
+                      placeholder="Enter food name"
+                      className="pl-10"
+                      onChange={handleInputChange}
+                    />
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="description">Description</Label>
+                  <div className="relative">
+                    <MdDescription className="absolute left-3 top-3 text-muted-foreground" />
+                    <Textarea
+                      id="description"
+                      name="description"
+                      placeholder="Describe the food item"
+                      className="pl-10 min-h-[100px]"
+                      onChange={handleInputChange}
+                    />
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="quantity">Quantity</Label>
+                  <div className="relative">
+                    <MdNumbers className="absolute left-3 top-3 text-muted-foreground" />
+                    <Input
+                      id="quantity"
+                      name="quantity"
+                      placeholder="Enter quantity"
+                      className="pl-10"
+                      onChange={handleInputChange}
+                    />
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="location">Location</Label>
+                  <div className="relative">
+                    <MdLocationOn className="absolute left-3 top-3 text-muted-foreground" />
+                    <Input
+                      id="location"
+                      name="location"
+                      placeholder="Enter location"
+                      className="pl-10"
+                      onChange={handleInputChange}
+                    />
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="foodImage">Food Image</Label>
+                  <div className="relative">
+                    <div className="border-2 border-dashed rounded-lg p-4 text-center hover:border-primary transition-colors">
+                      <input
+                        type="file"
+                        id="foodImage"
+                        accept="image/*"
+                        onChange={handleImage}
+                        className="hidden"
+                      />
+                      <label
+                        htmlFor="foodImage"
+                        className="cursor-pointer flex flex-col items-center gap-2"
+                      >
+                        {previewImage ? (
+                          <img
+                            src={previewImage}
+                            alt="Preview"
+                            className="w-full h-48 object-cover rounded-lg"
+                          />
+                        ) : (
+                          <>
+                            <MdImage className="w-10 h-10 text-muted-foreground" />
+                            <span className="text-muted-foreground">
+                              Click to upload image
+                            </span>
+                          </>
+                        )}
+                      </label>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
-            <Button className="w-full" type="submit" disabled={loading}>
-              {loading ? <FaSpinner className="animate-spin mr-2" /> : null}
-              {loading ? "Sharing..." : "Share Food"}
+            </form>
+          </CardContent>
+          <CardFooter>
+            <Button
+              className="w-full"
+              onClick={handleSubmit}
+              disabled={loading}
+            >
+              {loading ? (
+                <>
+                  <FaSpinner className="mr-2 h-4 w-4 animate-spin" />
+                  Adding Food...
+                </>
+              ) : (
+                <>
+                  <MdCloudUpload className="mr-2 h-4 w-4" />
+                  Share Food
+                </>
+              )}
             </Button>
-          </form>
-        </CardContent>
-      </Card>
-    </section>
+          </CardFooter>
+        </Card>
+      </div>
+    </div>
   );
 }

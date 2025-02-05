@@ -4,8 +4,6 @@ import { Link } from "react-router-dom";
 import useLogout from "@/hooks/useLogout";
 import { ModeToggle } from "../mode-toggle";
 import FoodList from "../FoodList";
-// import { useTheme } from "../theme-provider";
-import { GitHubLogoIcon } from "@radix-ui/react-icons";
 
 export function HomeLanding() {
   const { logout } = useLogout();
@@ -107,14 +105,6 @@ export function HomeLanding() {
               >
                 Start Sharing
               </Link>
-              <a
-                href="https://github.com/srexrg"
-                target="_blank"
-                className="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2 w-full md:w-1/3"
-              >
-                GitHub
-                <GitHubLogoIcon className="ml-2 w-5 h-5" />
-              </a>
             </div>
           </div>
         </section>
@@ -124,7 +114,7 @@ export function HomeLanding() {
 
       <footer className="border-t dark:border-slate-700 py-8">
         <div className="container mx-auto px-4 text-center text-muted-foreground">
-          <p>© 2024 NourishNet. All rights reserved.</p>
+          <p>© 2025 NourishNet. All rights reserved.</p>
         </div>
       </footer>
     </>

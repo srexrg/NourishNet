@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { Card, CardContent } from "./ui/card";
 import { Button } from "./ui/button";
+import { Badge } from "./ui/badge";
 import toast from "react-hot-toast";
-import { FaSpinner } from "react-icons/fa";
+import { FaSpinner, FaCheck, FaTimes } from "react-icons/fa";
 import { useAuthContext } from "@/context/AuthContext";
 
 interface Request {
@@ -21,9 +22,6 @@ interface Request {
 const IncomingCard: React.FC<Props> = ({ request, reloadRequests }: Props) => {
   const { authUser } = useAuthContext() || {};
   const [loading, setLoading] = useState(false);
-  const [isHidden, setIsHidden] = useState(false);
-  const [AcceptbuttonText, setAcceptButtonText] = useState("Accept");
-  const [DeclinebuttonText, setDeclineButtonText] = useState("Decline");
   const { foodName, description, quantity, foodImage, status, _id } = request;
 
   const handleAcceptRequest = async () => {
@@ -44,8 +42,6 @@ const IncomingCard: React.FC<Props> = ({ request, reloadRequests }: Props) => {
       }
       toast.success("Request Accepted successfully!");
       reloadRequests();
-      setIsHidden(true);
-      setAcceptButtonText("Accepted");
     } catch (error) {
       console.error("Error Accepting food request:", error);
       toast.error("Error Accepting food Request");
@@ -54,7 +50,7 @@ const IncomingCard: React.FC<Props> = ({ request, reloadRequests }: Props) => {
     }
   };
 
-  const DeclineRequest = async () => {
+  const handleDeclineRequest = async () => {
     setLoading(true);
     try {
       const response = await fetch(
@@ -68,70 +64,92 @@ const IncomingCard: React.FC<Props> = ({ request, reloadRequests }: Props) => {
         }
       );
       if (!response.ok) {
-        throw new Error("Failed to Accept request");
+        throw new Error("Failed to decline request");
       }
-      toast.success("Request Declined successfully!");
+      toast.success("Request declined successfully!");
       reloadRequests();
-      setIsHidden(true);
-      setDeclineButtonText("Declined");
     } catch (error) {
-      console.error("Error Declining food request:", error);
-      toast.error("Error Declining food");
+      console.error("Error declining food request:", error);
+      toast.error("Error declining request");
     } finally {
       setLoading(false);
     }
   };
 
-  if (isHidden) {
-    return null;
-  }
-
   return (
-    <div className="dark:bg-gray-900 rounded-lg overflow-hidden">
-      <Card className="bg-gray-200 dark:bg-gray-800">
-        <CardContent>
+    <Card className="group hover:shadow-lg transition-all duration-300 overflow-hidden">
+      <CardContent className="p-0">
+        <div className="relative">
           <img
-            alt="Food Item"
-            className="w-full h-48 object-cover object-center"
+            alt={foodName}
+            className="w-full h-48 object-cover object-center transition-transform duration-300 group-hover:scale-105"
             src={foodImage}
           />
-          <div className="p-4">
-            <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-300 mb-2">
+          <Badge 
+            className={`absolute top-2 right-2 ${
+              status === 'pending' ? 'bg-yellow-500' :
+              status === 'accepted' ? 'bg-green-500' :
+              'bg-red-500'
+            }`}
+          >
+            {status}
+          </Badge>
+        </div>
+        <div className="p-4 space-y-4">
+          <div>
+            <h3 className="text-lg font-semibold text-foreground">
               {foodName}
             </h3>
-            <p className="text-gray-600 dark:text-gray-400 mb-2">
-              Quantity: <span className="font-bold">{quantity}</span>
+            <p className="text-sm text-muted-foreground line-clamp-2">
+              {description}
             </p>
-            <p className="text-gray-600 dark:text-gray-400 mb-2">
-              Description: <span className="font-bold">{description}</span>
+          </div>
+
+          <div className="space-y-2">
+            <p className="text-sm text-muted-foreground">
+              Quantity: {quantity}
             </p>
-            <p className="text-gray-600 dark:text-gray-400 mb-2">
-              Requested by:{" "}
-              <span className="font-bold">{request.requesterId.username}</span>
+            <p className="text-sm text-muted-foreground">
+              Requested by: {request.requesterId.username}
             </p>
-            <p className="text-gray-600 dark:text-gray-400 mb-2">
-              Status: <span className="font-bold">{status}</span>
-            </p>
-            <div className="flex justify-center gap-4">
-              <Button onClick={handleAcceptRequest} disabled={loading}>
+          </div>
+
+          {status === 'pending' && (
+            <div className="flex gap-2">
+              <Button
+                className="flex-1"
+                onClick={handleAcceptRequest}
+                disabled={loading}
+              >
                 {loading ? (
                   <FaSpinner className="animate-spin" />
                 ) : (
-                  AcceptbuttonText
+                  <>
+                    <FaCheck className="mr-2" />
+                    Accept
+                  </>
                 )}
               </Button>
-              <Button onClick={DeclineRequest} disabled={loading}>
+              <Button
+                className="flex-1"
+                variant="destructive"
+                onClick={handleDeclineRequest}
+                disabled={loading}
+              >
                 {loading ? (
                   <FaSpinner className="animate-spin" />
                 ) : (
-                  DeclinebuttonText
+                  <>
+                    <FaTimes className="mr-2" />
+                    Decline
+                  </>
                 )}
               </Button>
             </div>
-          </div>
-        </CardContent>
-      </Card>
-    </div>
+          )}
+        </div>
+      </CardContent>
+    </Card>
   );
 };
 
