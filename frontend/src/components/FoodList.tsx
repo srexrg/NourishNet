@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from "react";
 import FoodItem from "./FoodItem";
 import { useAuthContext } from "@/context/AuthContext";
-import { FaSpinner } from "react-icons/fa";
+// import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
+// import { Badge } from "./ui/badge";
 
 interface Food {
   _id: string;
   foodName: string;
   description: string;
   quantity: string;
-  location:string
+  location: string;
   foodImage: string;
   sharedBy: string;
 }
@@ -16,7 +17,6 @@ interface Food {
 const FoodList: React.FC = () => {
   const { authUser } = useAuthContext() || {};
   const [loading, setLoading] = useState(false);
-  console.log(authUser.token);
   const [foods, setFoods] = useState<Food[] | null>(null);
 
   useEffect(() => {
@@ -34,14 +34,7 @@ const FoodList: React.FC = () => {
         );
 
         if (!response.ok) {
-          throw new Error(
-            `Failed to retrieve food items: ${response.statusText}`
-          );
-        }
-
-        const contentType = response.headers.get("content-type");
-        if (!contentType || !contentType.includes("application/json")) {
-          throw new Error("Unexpected response type: " + contentType);
+          throw new Error(`Failed to retrieve food items: ${response.statusText}`);
         }
 
         const data = await response.json();
@@ -58,26 +51,36 @@ const FoodList: React.FC = () => {
   }, [authUser]);
 
   return (
-    <section className="py-16">
-      <div className="container mx-auto px-4">
-        <h2 className="text-2xl font-bold mb-8">Available Food</h2>
-        {loading ? (
-          <FaSpinner className="animate-spin" />
-        ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-            {foods ? (
-              foods.map(
-                (food, index) => (
-                  console.log(foods),
-                  (<FoodItem key={`${food._id}-${index}`} food={food} />)
-                )
-              )
-            ) : (
-              <p>You dont have any food items yet.</p>
-            )}
-          </div>
-        )}
+    <section className="container py-24 sm:py-32 space-y-8">
+      <div className="text-center space-y-4">
+        <h2 className="text-3xl lg:text-4xl font-bold">
+          Available{" "}
+          <span className="bg-gradient-to-b from-primary/60 to-primary text-transparent bg-clip-text">
+            Food Items
+          </span>
+        </h2>
+        <p className="text-xl text-muted-foreground md:w-3/4 mx-auto">
+          Browse through available food items shared by our community members
+        </p>
       </div>
+
+      {loading ? (
+        <div className="flex justify-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+          {foods && foods.length > 0 ? (
+            foods.map((food) => (
+              <FoodItem key={food._id} food={food} />
+            ))
+          ) : (
+            <div className="col-span-full text-center">
+              <p className="text-muted-foreground text-lg">No food items available at the moment.</p>
+            </div>
+          )}
+        </div>
+      )}
     </section>
   );
 };

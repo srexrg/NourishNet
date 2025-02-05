@@ -45,10 +45,6 @@ export function HomeLanding() {
             <h1 className="text-4xl font-bold mb-4">
               Share Your Surplus, Feed Your Community
             </h1>
-            <p className="text-lg mb-8">
-              Join our community and help reduce food waste by sharing your
-              extra food with those in need.
-            </p>
             <Button className="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-md">
               <Link to="/add">Start Sharing</Link>
             </Button>
@@ -60,7 +56,7 @@ export function HomeLanding() {
       </main>
       <footer className="bg-gray-900 text-white py-6">
         <div className="container mx-auto px-4 text-center">
-          <p>© 2024 NourishNet. All rights reserved.</p>
+          <p>© 2025 NourishNet. All rights reserved.</p>
         </div>
       </footer>
     </>

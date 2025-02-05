@@ -4,87 +4,35 @@ import { Link } from "react-router-dom";
 import useLogout from "@/hooks/useLogout";
 import { ModeToggle } from "../mode-toggle";
 import FoodList from "../FoodList";
-import { useTheme } from "../theme-provider";
+// import { useTheme } from "../theme-provider";
+import { GitHubLogoIcon } from "@radix-ui/react-icons";
 
 export function HomeLanding() {
   const { logout } = useLogout();
+  // const { theme } = useTheme();
   const [menuOpen, setMenuOpen] = useState(false);
-  const {theme} = useTheme()
-
-  const styleClasses = theme === 'light' ? 'text-white' : 'hover:underline';
-
-  const toggleMenu = () => {
-    setMenuOpen(!menuOpen);
-  };
 
   return (
     <>
-      <header className="flex items-center justify-between px-4 py-3 bg-gray-900 text-white">
-        <Link className="text-xl font-bold" to="/">
-          NourishNet
-        </Link>
-        <nav className="hidden md:flex items-center space-x-4">
-          <Link className={styleClasses} to="/add">
-            Add Food
+      <header className="sticky top-0 z-40 w-full border-b-[1px] bg-white dark:border-b-slate-700 dark:bg-background">
+        <div className="flex items-center justify-between px-4 py-3">
+          <Link className="text-xl font-bold flex items-center" to="/">
+            <span className="bg-gradient-to-r from-[#F596D3] to-[#D247BF] text-transparent bg-clip-text">
+              NourishNet
+            </span>
           </Link>
-          <Link className={styleClasses} to="/home/myfood">
-            My Foods
-          </Link>
-          <Link className={styleClasses} to="/home/incoming">
-            Incoming Requests
-          </Link>
-          <Link className={styleClasses} to="/home/myrequest">
-            My Requests
-          </Link>
-          <Button
-            className="rounded-full"
-            size="icon"
-            variant="ghost"
-            onClick={logout}
-          >
-            <LogOutIcon className="w-5 h-5 text-white" />
-          </Button>
-          <ModeToggle />
-        </nav>
-        <button className="md:hidden block text-white" onClick={toggleMenu}>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-6 w-6"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            {menuOpen ? (
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M6 18L18 6M6 6l12 12"
-              />
-            ) : (
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M4 6h16M4 12h16m-7 6h7"
-              />
-            )}
-          </svg>
-        </button>
-      </header>
-      {menuOpen && (
-        <nav className="md:hidden bg-gray-900 absolute w-full left-0 top-16">
-          <div className="flex flex-col items-center space-y-2">
-            <Link className={styleClasses} to="/add">
+          
+          <nav className="hidden md:flex items-center space-x-6">
+            <Link className="text-sm hover:text-primary transition-colors" to="/add">
               Add Food
             </Link>
-            <Link className={styleClasses} to="/home/myfood">
+            <Link className="text-sm hover:text-primary transition-colors" to="/home/myfood">
               My Foods
             </Link>
-            <Link className={styleClasses} to="/home/incoming">
+            <Link className="text-sm hover:text-primary transition-colors" to="/home/incoming">
               Incoming Requests
             </Link>
-            <Link className={styleClasses} to="/home/myrequest">
+            <Link className="text-sm hover:text-primary transition-colors" to="/home/myrequest">
               My Requests
             </Link>
             <Button
@@ -97,28 +45,85 @@ export function HomeLanding() {
               <span className="sr-only">Logout</span>
             </Button>
             <ModeToggle />
-          </div>
-        </nav>
-      )}
+          </nav>
+
+          <button className="md:hidden" onClick={() => setMenuOpen(!menuOpen)}>
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              {menuOpen ? (
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              ) : (
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16m-7 6h7" />
+              )}
+            </svg>
+          </button>
+        </div>
+
+        {menuOpen && (
+          <nav className="md:hidden py-4 px-4 space-y-3 border-t dark:border-slate-700">
+            <Link className="block text-sm hover:text-primary transition-colors" to="/add">
+              Add Food
+            </Link>
+            <Link className="block text-sm hover:text-primary transition-colors" to="/home/myfood">
+              My Foods
+            </Link>
+            <Link className="block text-sm hover:text-primary transition-colors" to="/home/incoming">
+              Incoming Requests
+            </Link>
+            <Link className="block text-sm hover:text-primary transition-colors" to="/home/myrequest">
+              My Requests
+            </Link>
+            <div className="flex items-center space-x-4">
+              <Button
+                className="rounded-full"
+                size="icon"
+                variant="ghost"
+                onClick={logout}
+              >
+                <LogOutIcon className="w-5 h-5" />
+              </Button>
+              <ModeToggle />
+            </div>
+          </nav>
+        )}
+      </header>
+
       <main>
-        <section className="bg-gray-900 text-white py-20">
-          <div className="container mx-auto px-4 text-center">
-            <h1 className="text-4xl font-bold mb-4">
-              Share Your Surplus, Feed Your Community
+        <section className="container grid lg:grid-cols-2 place-items-center py-20 md:py-32 gap-10">
+          <div className="text-center lg:text-start space-y-6">
+            <h1 className="text-5xl md:text-6xl font-bold">
+              <span className="bg-gradient-to-r from-[#F596D3] to-[#D247BF] text-transparent bg-clip-text">
+                Share Food,
+              </span>{" "}
+              Build Community
             </h1>
-            <p className="text-lg mb-8">
+            <p className="text-xl text-muted-foreground md:w-10/12 mx-auto lg:mx-0">
               Join our community and help reduce food waste by sharing your
               extra food with those in need.
             </p>
-            <Button className="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-md">
-              <Link to="/add">Start Sharing</Link>
-            </Button>
+            <div className="space-y-4 md:space-y-0 md:space-x-4">
+              <Link
+                to="/add"
+                className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 w-full md:w-1/3"
+              >
+                Start Sharing
+              </Link>
+              <a
+                href="https://github.com/srexrg"
+                target="_blank"
+                className="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2 w-full md:w-1/3"
+              >
+                GitHub
+                <GitHubLogoIcon className="ml-2 w-5 h-5" />
+              </a>
+            </div>
           </div>
         </section>
+
         <FoodList />
       </main>
-      <footer className="bg-gray-900 text-white py-6">
-        <div className="container mx-auto px-4 text-center">
+
+      <footer className="border-t dark:border-slate-700 py-8">
+        <div className="container mx-auto px-4 text-center text-muted-foreground">
           <p>© 2024 NourishNet. All rights reserved.</p>
         </div>
       </footer>
