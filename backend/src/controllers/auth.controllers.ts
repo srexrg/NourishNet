@@ -63,7 +63,6 @@ export const login = async (req: Request, res: Response) => {
     }
 
     generateTokenAndSetCookie(user._id, req);
-    console.log(req.cookies.jwt)
     res.status(200).json({
       _id: user._id,
       username: user.username,

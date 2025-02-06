@@ -7,7 +7,7 @@ export const addFood = async (req: UserAuthInfoRequest, res: Response) => {
     const { foodName, description, quantity, location, donationDate,foodImage } =
       req.body;
 
-      console.log(req.body)
+
 
       const { _id: donorId, username } = req.user;
       

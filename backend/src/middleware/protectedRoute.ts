@@ -16,7 +16,6 @@ const protectedRoute = async (
   try {
     let token = req.headers["authorization"]
     token =token?.split(" ")[1]
-    console.log(token)
 
     if (!token) {
       return res.status(401).json({ error: "No token" });
